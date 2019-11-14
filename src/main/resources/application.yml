@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://39.106.74.147:3306/db_oj
+    hikari:
+      username: root
+      password: tmxiaopai
+    dirver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
