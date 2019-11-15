@@ -12,31 +12,18 @@ public class User {
     private String u_nickname;
     @Column
     private String u_password;
-
-    public void setU_id(int u_id) {
-        this.u_id = u_id;
-    }
-
-    public void setU_nickname(String u_nickname) {
-        this.u_nickname = u_nickname;
-    }
-
-    public void setU_password(String u_password) {
-        this.u_password = u_password;
-    }
-
-    public int getU_id() {
-        return u_id;
-    }
-
-    public String getU_nickname() {
-        return u_nickname;
-    }
-
-    public String getU_password() {
-        return u_password;
-    }
-
-    public User() {
-    }
+    @Column
+    private String u_mail;
+    @Column
+    private String u_phone;
+    @Column
+    private String u_sex;
+    @Column
+    private short u_identity;
+    @Column
+    private int u_all_submit;
+    @Column
+    private int u_all_pass;
+    @Column
+    private double u_pass_rate;
 }

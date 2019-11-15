@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myCss.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/myJs.js"></script>
+</head>
+<body>
+<!--侧边菜单-->
+<div id="aside" class="col-sm-2">
+    <ul class="list-unstyled text-center">
+        <a href="item_bank.html" target="my_iframe">
+            <li class="topli" style="background-color: #ffffff">Infomation</li>
+        </a>
+        <a href="subject_list.html" target="my_iframe">
+            <li class="secondli" style="background-color: #eeeeee;">Problems</li>
+        </a>
+        <a href="rank_list.html" target="my_iframe">
+            <li class="thirdli" style="background-color: #ffffff;">RankList</li>
+        </a>
+        <a href="submit_list.html" target="my_iframe">
+            <li class="bottomli" style="background-color: #ffffff;">Submissions</li>
+        </a>
+    </ul>
+</div>
+<!--内容-->
+<div class="col-sm-10 embed-responsive embed-responsive-16by9">
+    <iframe name="my_iframe" src="subject_list.html" class="embed-responsive-item" scrolling="no"></iframe>
+</div>
+
+<!--<script>-->
+<!--    var height = document.documentElement.clientHeight - 56;-->
+<!--    var mydiv = document.getElementById("content");-->
+<!--    mydiv.style.height = height + "px";-->
+<!--</script>-->
+</body>
+</html>
