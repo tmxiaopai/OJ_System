@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="OJ_System:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>OJ_System</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="OJ_System-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="OJ_System:war exploded" />
+    </root>
+  </artifact>
+</component>
