@@ -1,8 +1,10 @@
 package com.oj.bean;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Time;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author TMXIAOPAI
@@ -12,64 +14,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_contest", schema = "db_oj", catalog = "")
 public class UserContest {
-    private int ucId;
-    private Integer ucPassCount;
-    private Integer ucPosition;
-    private Time ucTime;
+    private Integer ucId;
+    private Integer ucPassCount;//用户在比赛中的通过题目数量
+    private Integer ucPosition;//用户排名
+    private Time ucTime;//用户在比赛中总的做题时间，算上罚时
+    private OrdinaryUser uId;
+    private Contest cId;
 
-    @Id
-    @Column(name = "uc_ID")
-    public int getUcId() {
-        return ucId;
-    }
-
-    public void setUcId(int ucId) {
-        this.ucId = ucId;
-    }
-
-    @Basic
-    @Column(name = "uc_pass_count")
-    public Integer getUcPassCount() {
-        return ucPassCount;
-    }
-
-    public void setUcPassCount(Integer ucPassCount) {
-        this.ucPassCount = ucPassCount;
-    }
-
-    @Basic
-    @Column(name = "uc_position")
-    public Integer getUcPosition() {
-        return ucPosition;
-    }
-
-    public void setUcPosition(Integer ucPosition) {
-        this.ucPosition = ucPosition;
-    }
-
-    @Basic
-    @Column(name = "uc_time")
-    public Time getUcTime() {
-        return ucTime;
-    }
-
-    public void setUcTime(Time ucTime) {
-        this.ucTime = ucTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserContest that = (UserContest) o;
-        return ucId == that.ucId &&
-                Objects.equals(ucPassCount, that.ucPassCount) &&
-                Objects.equals(ucPosition, that.ucPosition) &&
-                Objects.equals(ucTime, that.ucTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ucId, ucPassCount, ucPosition, ucTime);
-    }
+    //用户比赛题目情况
+    private List<UserContestSubject> userContestSubjects=new ArrayList<UserContestSubject>();
 }

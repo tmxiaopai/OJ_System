@@ -1,7 +1,9 @@
 package com.oj.bean;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author TMXIAOPAI
@@ -11,112 +13,20 @@ import java.util.Objects;
 @Entity
 @Table(name = "contest", schema = "db_oj", catalog = "")
 public class Contest {
-    private int cId;
+    private Integer cId;
     private String cName;
-    private String cPlace;
-    private String cContent;
-    private Integer cCount;
-    private String cTimeLimit;
-    private Integer cUserCount;
-    private Byte cIsPublic;
+    private String cPlace;//比赛地点
+    private String cDescription;//比赛描述
+    private Integer cCount;//题目数量
+    private String cTimeLimit;//时间限制
+    private Integer cUserCount;//报名人数
+    private boolean cIsPublic;//是否公开
+    private String cPassword;//比赛密码
 
-    @Id
-    @Column(name = "c_ID")
-    public int getcId() {
-        return cId;
-    }
+    private Administrator createUserId;//创建比赛人
 
-    public void setcId(int cId) {
-        this.cId = cId;
-    }
+    private List<ContestSubject> contestSubjects = new ArrayList<ContestSubject>();//比赛题目列表
+    private List<UserContest> userContests = new ArrayList<UserContest>();//用户比赛表，获取用户的排名以及做题情况
 
-    @Basic
-    @Column(name = "c_name")
-    public String getcName() {
-        return cName;
-    }
 
-    public void setcName(String cName) {
-        this.cName = cName;
-    }
-
-    @Basic
-    @Column(name = "c_place")
-    public String getcPlace() {
-        return cPlace;
-    }
-
-    public void setcPlace(String cPlace) {
-        this.cPlace = cPlace;
-    }
-
-    @Basic
-    @Column(name = "c_content")
-    public String getcContent() {
-        return cContent;
-    }
-
-    public void setcContent(String cContent) {
-        this.cContent = cContent;
-    }
-
-    @Basic
-    @Column(name = "c_count")
-    public Integer getcCount() {
-        return cCount;
-    }
-
-    public void setcCount(Integer cCount) {
-        this.cCount = cCount;
-    }
-
-    @Basic
-    @Column(name = "c_time_limit")
-    public String getcTimeLimit() {
-        return cTimeLimit;
-    }
-
-    public void setcTimeLimit(String cTimeLimit) {
-        this.cTimeLimit = cTimeLimit;
-    }
-
-    @Basic
-    @Column(name = "c_user_count")
-    public Integer getcUserCount() {
-        return cUserCount;
-    }
-
-    public void setcUserCount(Integer cUserCount) {
-        this.cUserCount = cUserCount;
-    }
-
-    @Basic
-    @Column(name = "c_isPublic")
-    public Byte getcIsPublic() {
-        return cIsPublic;
-    }
-
-    public void setcIsPublic(Byte cIsPublic) {
-        this.cIsPublic = cIsPublic;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Contest that = (Contest) o;
-        return cId == that.cId &&
-                Objects.equals(cName, that.cName) &&
-                Objects.equals(cPlace, that.cPlace) &&
-                Objects.equals(cContent, that.cContent) &&
-                Objects.equals(cCount, that.cCount) &&
-                Objects.equals(cTimeLimit, that.cTimeLimit) &&
-                Objects.equals(cUserCount, that.cUserCount) &&
-                Objects.equals(cIsPublic, that.cIsPublic);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cId, cName, cPlace, cContent, cCount, cTimeLimit, cUserCount, cIsPublic);
-    }
 }

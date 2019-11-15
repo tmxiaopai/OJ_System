@@ -1,8 +1,7 @@
 package com.oj.bean;
 
-import javax.persistence.*;
-import java.sql.Time;
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author TMXIAOPAI
@@ -12,52 +11,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_contest_subject", schema = "db_oj", catalog = "")
 public class UserContestSubject {
-    private int ucsId;
-    private Integer errorCount;
-    private Time finishTime;
-
-    @Id
-    @Column(name = "ucs_ID")
-    public int getUcsId() {
-        return ucsId;
-    }
-
-    public void setUcsId(int ucsId) {
-        this.ucsId = ucsId;
-    }
-
-    @Basic
-    @Column(name = "error_count")
-    public Integer getErrorCount() {
-        return errorCount;
-    }
-
-    public void setErrorCount(Integer errorCount) {
-        this.errorCount = errorCount;
-    }
-
-    @Basic
-    @Column(name = "finish_time")
-    public Time getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime(Time finishTime) {
-        this.finishTime = finishTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserContestSubject that = (UserContestSubject) o;
-        return ucsId == that.ucsId &&
-                Objects.equals(errorCount, that.errorCount) &&
-                Objects.equals(finishTime, that.finishTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ucsId, errorCount, finishTime);
-    }
+    private Integer ucsId;//用户比赛题目ID
+    private Integer errorCount;//错误提交次数
+    private String finishTime;//完成总时间
+    private UserContest ucId;//用户比赛ID
 }
