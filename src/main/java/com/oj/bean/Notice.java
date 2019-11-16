@@ -1,7 +1,9 @@
 package com.oj.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -11,9 +13,21 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "notice", schema = "db_oj", catalog = "")
+@Getter
+@Setter
 public class Notice {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nId;//公告ID
+    @Column
     private Timestamp nTime;//发布时间
+    @Column
     private String nContent;//公告内容
+    @ManyToOne
+    @JoinColumn(name = "adId")
     private Administrator adId;//公告发布人
+
+    public Notice() {
+
+    }
 }

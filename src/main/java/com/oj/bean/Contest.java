@@ -1,7 +1,11 @@
 package com.oj.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,23 +14,40 @@ import java.util.List;
  * @date 2019/11/15 - 9:42
  * @package_name com.oj.bean
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "contest", schema = "db_oj", catalog = "")
 public class Contest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cId;
+    @Column(length = 20)
     private String cName;
+    @Column(length = 20)
     private String cPlace;//比赛地点
+    @Column(length = 200)
     private String cDescription;//比赛描述
+    @Column
     private Integer cCount;//题目数量
+    @Column(length = 20)
     private String cTimeLimit;//时间限制
+    @Column
     private Integer cUserCount;//报名人数
+    @Column
     private boolean cIsPublic;//是否公开
+    @Column(length = 20)
     private String cPassword;//比赛密码
-
+    @ManyToOne
+    @JoinColumn(name = "createUserId")
     private Administrator createUserId;//创建比赛人
-
+    @OneToMany(mappedBy = "cId", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<ContestSubject> contestSubjects = new ArrayList<ContestSubject>();//比赛题目列表
+    @OneToMany(mappedBy = "cId", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<UserContest> userContests = new ArrayList<UserContest>();//用户比赛表，获取用户的排名以及做题情况
 
-
+    public Contest() {
+    }
 }

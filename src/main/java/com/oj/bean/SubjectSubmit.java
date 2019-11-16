@@ -1,7 +1,9 @@
 package com.oj.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -9,16 +11,35 @@ import java.sql.Timestamp;
  * @date 2019/11/15 - 9:42
  * @package_name com.oj.bean
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "subject_submit", schema = "db_oj", catalog = "")
 public class SubjectSubmit {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ssId;//题目提交记录ID
+    @Column
     private String ssResult;//题目运行结果
+    @Column
     private Timestamp ssRuntime;//题目运行时间
+    @Column
     private Integer ssMemorySize;//题目内存占用
+    @Column
     private String ssLanguage;//答题语言
+    @Column
     private String ssCompileInfo;//
+    @Column
     private Integer ssCodeLength;//代码长度
+    @Column
     private Timestamp ssTime;
+    @ManyToOne
+    @JoinColumn(name = "ouId")
+    private OrdinaryUser ouId;
+    @ManyToOne
+    @JoinColumn(name = "sId")
+    private Subject sId;
 
+    public SubjectSubmit() {
+    }
 }

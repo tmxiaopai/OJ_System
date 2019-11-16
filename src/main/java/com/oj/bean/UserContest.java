@@ -1,7 +1,11 @@
 package com.oj.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +15,33 @@ import java.util.List;
  * @date 2019/11/15 - 9:42
  * @package_name com.oj.bean
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "user_contest", schema = "db_oj", catalog = "")
 public class UserContest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ucId;
+    @Column
     private Integer ucPassCount;//用户在比赛中的通过题目数量
+    @Column
     private Integer ucPosition;//用户排名
+    @Column
     private Time ucTime;//用户在比赛中总的做题时间，算上罚时
-    private OrdinaryUser uId;
+
+    @ManyToOne
+    @JoinColumn(name = "ouId")
+    private OrdinaryUser ouId;
+    @ManyToOne
+    @JoinColumn(name = "cId")
     private Contest cId;
 
     //用户比赛题目情况
+    @OneToMany(mappedBy = "ucId",cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<UserContestSubject> userContestSubjects=new ArrayList<UserContestSubject>();
+
+    public UserContest() {
+    }
 }

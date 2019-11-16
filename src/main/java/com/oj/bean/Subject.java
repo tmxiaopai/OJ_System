@@ -1,9 +1,16 @@
 package com.oj.bean;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "subject", schema = "db_oj", catalog = "")
 public class Subject {
@@ -24,6 +31,10 @@ public class Subject {
     private short sDegree;//题目难度0 1 2 简单 中等 难
     @Column(length = 10)
     private String sSource;//题目贡献者
-
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "sId")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubjectSubmit> subjectSubmits=new ArrayList<SubjectSubmit>();//题目提交情况
+
+    public Subject() {
+    }
 }
