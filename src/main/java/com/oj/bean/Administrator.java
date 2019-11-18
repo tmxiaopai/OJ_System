@@ -32,6 +32,10 @@ public class Administrator {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Contest> contests = new ArrayList<Contest>();//管理员发布比赛列表
 
+    public Administrator(User uId) {
+        this.uId = uId;
+    }
+
     public Administrator() {
     }
 }

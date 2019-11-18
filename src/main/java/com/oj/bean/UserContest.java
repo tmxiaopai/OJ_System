@@ -44,4 +44,12 @@ public class UserContest {
 
     public UserContest() {
     }
+
+    public UserContest(Integer ucPassCount, Integer ucPosition, Time ucTime, OrdinaryUser ouId, Contest cId) {
+        this.ucPassCount = ucPassCount;
+        this.ucPosition = ucPosition;
+        this.ucTime = ucTime;
+        this.ouId = ouId;
+        this.cId = cId;
+    }
 }

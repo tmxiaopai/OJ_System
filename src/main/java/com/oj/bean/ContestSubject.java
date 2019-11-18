@@ -23,7 +23,7 @@ public class ContestSubject {
     @Column
     private Integer csAllPass;//比赛题目通过次数
     @Column
-    private Integer csPassRate;//比赛题目通过率
+    private Double csPassRate;//比赛题目通过率
     @ManyToOne
     @JoinColumn(name = "cId")
     private Contest cId;//比赛ID
@@ -32,5 +32,13 @@ public class ContestSubject {
     private Subject sId;//题目ID
 
     public ContestSubject() {
+    }
+
+    public ContestSubject(Integer csAllSubmit, Integer csAllPass, Double csPassRate, Contest cId, Subject sId) {
+        this.csAllSubmit = csAllSubmit;
+        this.csAllPass = csAllPass;
+        this.csPassRate = csPassRate;
+        this.cId = cId;
+        this.sId = sId;
     }
 }

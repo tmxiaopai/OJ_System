@@ -6,7 +6,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,8 +32,10 @@ public class Contest {
     private String cDescription;//比赛描述
     @Column
     private Integer cCount;//题目数量
-    @Column(length = 20)
-    private String cTimeLimit;//时间限制
+    @Column
+    private Date startTime;//比赛开始时间
+    @Column
+    private Date endTime;//比赛结束时间
     @Column
     private Integer cUserCount;//报名人数
     @Column
@@ -47,6 +51,19 @@ public class Contest {
     @OneToMany(mappedBy = "cId", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<UserContest> userContests = new ArrayList<UserContest>();//用户比赛表，获取用户的排名以及做题情况
+
+    public Contest(String cName, String cPlace, String cDescription, Integer cCount, Date startTime, Date endTime, Integer cUserCount, boolean cIsPublic, String cPassword, Administrator createUserId) {
+        this.cName = cName;
+        this.cPlace = cPlace;
+        this.cDescription = cDescription;
+        this.cCount = cCount;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.cUserCount = cUserCount;
+        this.cIsPublic = cIsPublic;
+        this.cPassword = cPassword;
+        this.createUserId = createUserId;
+    }
 
     public Contest() {
     }

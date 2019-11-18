@@ -28,4 +28,10 @@ public class UserContestSubject {
 
     public UserContestSubject() {
     }
+
+    public UserContestSubject(Integer errorCount, String finishTime, UserContest ucId) {
+        this.errorCount = errorCount;
+        this.finishTime = finishTime;
+        this.ucId = ucId;
+    }
 }

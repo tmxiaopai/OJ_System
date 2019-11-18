@@ -32,6 +32,13 @@ public class OrdinaryUser {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubjectSubmit> subjectSubmits=new ArrayList<SubjectSubmit>();//用户的提交记录
 
+    public OrdinaryUser(Integer ouAllPass, Integer ouAllSubmit, Double ouPassRate, User uId) {
+        this.ouAllPass = ouAllPass;
+        this.ouAllSubmit = ouAllSubmit;
+        this.ouPassRate = ouPassRate;
+        this.uId = uId;
+    }
+
     public OrdinaryUser() {
     }
 }

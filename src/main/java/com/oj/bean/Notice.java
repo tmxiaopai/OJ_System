@@ -30,4 +30,10 @@ public class Notice {
     public Notice() {
 
     }
+
+    public Notice(Timestamp nTime, String nContent, Administrator adId) {
+        this.nTime = nTime;
+        this.nContent = nContent;
+        this.adId = adId;
+    }
 }

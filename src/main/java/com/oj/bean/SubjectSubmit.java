@@ -42,4 +42,16 @@ public class SubjectSubmit {
 
     public SubjectSubmit() {
     }
+
+    public SubjectSubmit(String ssResult, Timestamp ssRuntime, Integer ssMemorySize, String ssLanguage, String ssCompileInfo, Integer ssCodeLength, Timestamp ssTime, OrdinaryUser ouId, Subject sId) {
+        this.ssResult = ssResult;
+        this.ssRuntime = ssRuntime;
+        this.ssMemorySize = ssMemorySize;
+        this.ssLanguage = ssLanguage;
+        this.ssCompileInfo = ssCompileInfo;
+        this.ssCodeLength = ssCodeLength;
+        this.ssTime = ssTime;
+        this.ouId = ouId;
+        this.sId = sId;
+    }
 }

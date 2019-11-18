@@ -25,6 +25,12 @@ public class Subject {
     private Integer sAllSubmit;//总提交数
     @Column
     private Integer sAllPass;//总通过数
+    @Column
+    private Double passRate;//通过率
+    @Column
+    private Integer memoryLimit;//内存限制
+    @Column
+    private Integer timeLimit;//时间限制
     @Column(length = 10)
     private String sType;//题目类型
     @Column
@@ -36,5 +42,18 @@ public class Subject {
     private List<SubjectSubmit> subjectSubmits=new ArrayList<SubjectSubmit>();//题目提交情况
 
     public Subject() {
+    }
+
+    public Subject(Integer sNum, String sName, Integer sAllSubmit, Integer sAllPass, Double passRate, Integer memoryLimit, Integer timeLimit, String sType, short sDegree, String sSource) {
+        this.sNum = sNum;
+        this.sName = sName;
+        this.sAllSubmit = sAllSubmit;
+        this.sAllPass = sAllPass;
+        this.passRate = passRate;
+        this.memoryLimit = memoryLimit;
+        this.timeLimit = timeLimit;
+        this.sType = sType;
+        this.sDegree = sDegree;
+        this.sSource = sSource;
     }
 }

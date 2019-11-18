@@ -31,6 +31,15 @@ public class User {
     @Column
     private String uSex;
 
+    public User(String uNickname, String uPassword, short uIdentity, String uMail, String uPhone, String uSex) {
+        this.uNickname = uNickname;
+        this.uPassword = uPassword;
+        this.uIdentity = uIdentity;
+        this.uMail = uMail;
+        this.uPhone = uPhone;
+        this.uSex = uSex;
+    }
+
     public User() {
     }
 }
