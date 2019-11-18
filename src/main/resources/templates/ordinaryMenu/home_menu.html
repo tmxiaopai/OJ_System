@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Menu</title>
@@ -13,13 +13,13 @@
 <!--侧边菜单-->
 <div id="aside" class="col-sm-2">
     <ul class="list-unstyled text-center list-group">
-        <a href="../resources/templates/ordinaryHome/notice.html" target="my_iframe"><li class="topli" style="background-color: #eeeeee">Notice</li></a>
-        <a href="../resources/templates/ordinaryHome/faq.html" target="my_iframe"><li class="bottomli" style="background-color: #ffffff;">FAQ</li></a>
+        <a href="/notice" target="my_iframe"><li class="topli" style="background-color: #eeeeee">Notice</li></a>
+        <a href="/faq" target="my_iframe"><li class="bottomli" style="background-color: #ffffff;">FAQ</li></a>
     </ul>
 </div>
 <!--内容-->
 <div class="col-sm-10 embed-responsive embed-responsive-16by9 contentbody">
-    <iframe name="my_iframe" src="../resources/templates/ordinaryHome/notice.html" class="embed-responsive-item"></iframe>
+    <iframe name="my_iframe" src="/notice" class="embed-responsive-item"></iframe>
 </div>
 </body>
 </html>

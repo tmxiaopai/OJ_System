@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>主页</title>
@@ -14,17 +14,17 @@
 <div id="header">
     <ul class="list-unstyled">
         <li id="home" class="col-sm-1 menus">
-            <a id="homebtn" href="../resources/templates/ordeinaryMenu/home_menu.html" target="home_iframe">
+            <a id="homebtn" href="/home_menu" target="home_iframe">
                 <span id="home_btn" class="glyphicon glyphicon-home" style="color: black">主页</span>
             </a>
         </li>
         <li id="practice" class="col-sm-1 menus">
-            <a href="../resources/templates/ordinarySubject/subject_menu.html" target="home_iframe">
+            <a href="/subject_menu" target="home_iframe">
                 <span id="practice_btn" class="glyphicon glyphicon-screenshot">练习</span>
             </a>
         </li>
         <li id="contest" class="col-sm-1 menus">
-            <a href="../resources/templates/ordinaryContest/contest_list.html" target="home_iframe">
+            <a href="/contest_list" target="home_iframe">
                 <span id="contest_btn" class="glyphicon glyphicon-fire">比赛</span>
             </a>
         </li>
@@ -68,7 +68,7 @@
 </div>
 <!--home框架-->
 <div class="col-sm-12 embed-responsive embed-responsive-16by9" id="home_iframe">
-    <iframe id="homeiframe" name="home_iframe" src="../resources/templates/ordeinaryMenu/home_menu.html" class="embed-responsive-item" scrolling=""></iframe>
+    <iframe id="homeiframe" name="home_iframe" src="/home_menu" class="embed-responsive-item" scrolling=""></iframe>
 </div>
 
 <!--footer-->
