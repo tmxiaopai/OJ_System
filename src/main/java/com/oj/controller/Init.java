@@ -68,9 +68,9 @@ public class Init {
         subjectRepository.save(subject2);
         subjectRepository.save(subject3);
 
-        Contest contest1 = new Contest("大学生程序设计选拔赛1", "HGU University", "这是一个比赛描述，字数可能有一二百字，字数不够只能复制来凑！", 3, (Date) new Date(), (Date) new Date(), 0, false, "123456", administrator1);
-        Contest contest2 = new Contest("大学生程序设计选拔赛2", "HGU University", "这是一个比赛描述，字数可能有一二百字，字数不够只能复制来凑！", 3, (Date) new Date(), (Date) new Date(), 0, false, "123456", administrator2);
-        Contest contest3 = new Contest("大学生程序设计选拔赛3", "HGU University", "这是一个比赛描述，字数可能有一二百字，字数不够只能复制来凑！", 3, (Date) new Date(), (Date) new Date(), 0, false, "123456", administrator1);
+        Contest contest1 = new Contest("大学生程序设计选拔赛1", "HGU University", "这是一个比赛描述，字数可能有一二百字，字数不够只能复制来凑！", 3, (Date) new Date(), (Date) new Date(), 0, false, "123456", administrator1, (short) 0);
+        Contest contest2 = new Contest("大学生程序设计选拔赛2", "HGU University", "这是一个比赛描述，字数可能有一二百字，字数不够只能复制来凑！", 3, (Date) new Date(), (Date) new Date(), 0, false, "123456", administrator2, (short) 1);
+        Contest contest3 = new Contest("大学生程序设计选拔赛3", "HGU University", "这是一个比赛描述，字数可能有一二百字，字数不够只能复制来凑！", 3, (Date) new Date(), (Date) new Date(), 0, false, "123456", administrator1, (short) 2);
 
         contestRepository.save(contest1);
         contestRepository.save(contest2);

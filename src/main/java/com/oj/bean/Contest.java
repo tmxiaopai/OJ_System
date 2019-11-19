@@ -41,6 +41,8 @@ public class Contest {
     private boolean cIsPublic;//是否公开
     @Column(length = 20)
     private String cPassword;//比赛密码
+    @Column
+    private short isFinish;//是否完成
     @ManyToOne
     @JoinColumn(name = "createUserId")
     private Administrator createUserId;//创建比赛人
@@ -51,7 +53,7 @@ public class Contest {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<UserContest> userContests = new ArrayList<UserContest>();//用户比赛表，获取用户的排名以及做题情况
 
-    public Contest(String cName, String cPlace, String cDescription, Integer cCount, Date startTime, Date endTime, Integer cUserCount, boolean cIsPublic, String cPassword, Administrator createUserId) {
+    public Contest(String cName, String cPlace, String cDescription, Integer cCount, Date startTime, Date endTime, Integer cUserCount, boolean cIsPublic, String cPassword, Administrator createUserId, short isFinish) {
         this.cName = cName;
         this.cPlace = cPlace;
         this.cDescription = cDescription;
@@ -61,6 +63,7 @@ public class Contest {
         this.cUserCount = cUserCount;
         this.cIsPublic = cIsPublic;
         this.cPassword = cPassword;
+        this.isFinish = isFinish;
         this.createUserId = createUserId;
     }
 

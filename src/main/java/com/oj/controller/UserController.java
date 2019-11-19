@@ -1,16 +1,15 @@
 package com.oj.controller;
 
-import com.oj.bean.Notice;
-import com.oj.bean.OrdinaryUser;
-import com.oj.bean.Subject;
-import com.oj.bean.SubjectSubmit;
+import com.oj.bean.*;
 import com.oj.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Controller
@@ -61,7 +60,9 @@ public class UserController {
     }
 
     @RequestMapping("/contest_list")
-    public String contestList() {
+    public String contestList(ModelMap model) {
+        List<Contest>contests=contestRepository.findAll();
+        model.addAttribute("contests",contests);
         return "ordinaryContest/contest_list";
     }
 
@@ -77,8 +78,8 @@ public class UserController {
 
     @RequestMapping("/notice")
     public String notice(ModelMap model) {
-        List<Notice> notices=noticeRepository.findAll();
-        model.addAttribute("notices",notices);
+        List<Notice> notices = noticeRepository.findAll();
+        model.addAttribute("notices", notices);
         return "ordinaryHome/notice";
     }
 
@@ -93,27 +94,37 @@ public class UserController {
     }
 
     @RequestMapping("/item_bank")
-    public String itemBank() {
+    public String itemBank(ModelMap model) {
+        int allSubmitCount = 180;
+        int subjectCount = (int) subjectRepository.count();
+        int allpassCount = 12;
+        float passRate=(float) allpassCount/(float)allSubmitCount*100;
+        System.out.println(passRate);
+        model.addAttribute("subCount", subjectCount);
+        model.addAttribute("allSubmitCount", allSubmitCount);
+        model.addAttribute("passRate", String.format("%.2f", passRate));
         return "ordinarySubject/item_bank";
     }
 
     @RequestMapping("/subject_list")
     public String subjectList(ModelMap model) {
-        List<Subject> subjects=subjectRepository.findAll();
-        model.addAttribute("subjects",subjects);
+        List<Subject> subjects = subjectRepository.findAll();
+        model.addAttribute("subjects", subjects);
         return "ordinarySubject/subject_list";
     }
 
     @RequestMapping("/rank_list")
     public String rankList(ModelMap model) {
-        List<OrdinaryUser> ordinaryUsers=ordinaryUserRepository.findAll();
+        List<OrdinaryUser> ordinaryUsers = ordinaryUserRepository.rankListByPassCount();
+        model.addAttribute("users", ordinaryUsers);
+
         return "ordinarySubject/rank_list";
     }
 
     @RequestMapping("/submit_list")
     public String submitList(ModelMap model) {
-        List<SubjectSubmit> subjectSubmits=subjectSubmitRepository.findAll();
-        model.addAttribute("submits",subjectSubmits);
+        List<SubjectSubmit> subjectSubmits = subjectSubmitRepository.findAll();
+        model.addAttribute("submits", subjectSubmits);
         return "ordinarySubject/submit_list";
     }
 
