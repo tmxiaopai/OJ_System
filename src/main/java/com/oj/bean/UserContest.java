@@ -6,7 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class UserContest {
     @Column
     private Integer ucPosition;//用户排名
     @Column
-    private Time ucTime;//用户在比赛中总的做题时间，算上罚时
+    private Timestamp ucTime;//用户在比赛中总的做题时间，算上罚时
 
     @ManyToOne
     @JoinColumn(name = "ouId")
@@ -45,7 +45,7 @@ public class UserContest {
     public UserContest() {
     }
 
-    public UserContest(Integer ucPassCount, Integer ucPosition, Time ucTime, OrdinaryUser ouId, Contest cId) {
+    public UserContest(Integer ucPassCount, Integer ucPosition, Timestamp ucTime, OrdinaryUser ouId, Contest cId) {
         this.ucPassCount = ucPassCount;
         this.ucPosition = ucPosition;
         this.ucTime = ucTime;

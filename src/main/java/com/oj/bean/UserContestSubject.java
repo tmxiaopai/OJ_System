@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * @author TMXIAOPAI
@@ -21,7 +22,7 @@ public class UserContestSubject {
     @Column
     private Integer errorCount;//错误提交次数
     @Column
-    private String finishTime;//完成总时间
+    private Timestamp finishTime;//完成总时间
     @ManyToOne
     @JoinColumn(name = "ucId")
     private UserContest ucId;//用户比赛ID
@@ -29,7 +30,7 @@ public class UserContestSubject {
     public UserContestSubject() {
     }
 
-    public UserContestSubject(Integer errorCount, String finishTime, UserContest ucId) {
+    public UserContestSubject(Integer errorCount, Timestamp finishTime, UserContest ucId) {
         this.errorCount = errorCount;
         this.finishTime = finishTime;
         this.ucId = ucId;

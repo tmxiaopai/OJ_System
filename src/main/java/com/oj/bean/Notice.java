@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author TMXIAOPAI
@@ -20,7 +20,9 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nId;//公告ID
     @Column
-    private Timestamp nTime;//发布时间
+    private Date nTime;//发布时间
+    @Column
+    private String nName;
     @Column
     private String nContent;//公告内容
     @ManyToOne
@@ -31,8 +33,9 @@ public class Notice {
 
     }
 
-    public Notice(Timestamp nTime, String nContent, Administrator adId) {
+    public Notice(Date nTime, String nName, String nContent, Administrator adId) {
         this.nTime = nTime;
+        this.nName = nName;
         this.nContent = nContent;
         this.adId = adId;
     }
