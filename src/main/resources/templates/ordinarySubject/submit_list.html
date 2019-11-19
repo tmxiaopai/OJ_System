@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>提交情况</title>
@@ -27,106 +27,19 @@
             <th>内存占用(kb)</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody th:each="submit:${submits}">
         <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>Accept</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
+            <td th:text="${submit.ssId}">1</td>
+            <td th:text="${submit.ouId.getUId().getUNickname()}">12580</td>
+            <td th:text="${submit.ssId}">8001</td>
+            <td th:text="${submit.ssLanguage}">Java</td>
+            <td th:text="${submit.ssResult}">Accept</td>
+            <td th:text="${submit.ssTime}">2019-11-06 12:15:18</td>
+            <td th:text="${submit.ssCodeLength}">98</td>
+            <td th:text="${submit.ssRuntime}">125</td>
+            <td th:text="${submit.ssMemorySize}">25</td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>Accept</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>Accept</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>Accept</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>Accept</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>Accept</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>Accept</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>运行出错</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>12580</td>
-            <td>8001</td>
-            <td>Java</td>
-            <td>编译出错</td>
-            <td>2019-11-06 12:15:18</td>
-            <td>98</td>
-            <td>125</td>
-            <td>25</td>
-        </tr>
+
         </tbody>
     </table>
 </div>

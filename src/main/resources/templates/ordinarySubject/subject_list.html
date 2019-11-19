@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>题目列表</title>
@@ -68,86 +68,18 @@
             <th>难度</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody th:each="subject:${subjects}">
         <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
+            <td th:text="${subject.SId}"></td>
+            <a href="/sub" target="_blank"><td th:text="${subject.SNum}"></td></a>
+            <td th:text="${subject.SName}"><a href="/sub" target="_blank"></a> </td>
             <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-remove-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><a href="submitandjudge.html" target="_blank">8001</a></td>
-            <td><a href="submitandjudge.html" target="_blank">删除排序数组中的重复项</a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
-            <td>85%(85/100)</td>
-            <td>简单</td>
+            <td>
+                <span th:text="${subject.PassRate}"></span>
+                (<span th:text="${subject.SAllPass}"></span>/
+                <span th:text="${subject.SAllSubmit}"></span>)
+            </td>
+            <td th:text="${subject.SDegree}"></td>
         </tr>
         </tbody>
     </table>
