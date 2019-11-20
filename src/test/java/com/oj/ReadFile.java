@@ -10,7 +10,7 @@ import java.io.*;
 public class ReadFile {
 
     public static void main(String[] args) throws IOException {
-       /* Reader reader = new InputStreamReader(new FileInputStream("output.txt"));
+       /* Reader reader = new InputStreamReader(new FileInputStream(" output.txt"));
 
 // 一次读一个字节
         int tempchar;
@@ -32,7 +32,14 @@ public class ReadFile {
             Integer a[]=new Integer[8];
             Integer b[]=new Integer[8];
             for(int i=0;i<se.length;i++){
-                System.out.println(se[i]);
+                if(0==i%2)a[i/2]=Integer.valueOf(se[i]);
+                else {
+                    b[i/2]=Integer.valueOf(se[i]);
+                }
+            }
+            for(int i=0;i<a.length;i++){
+                System.out.println("a"+a[i]);
+                System.out.println("b"+b[i]);
             }
         }
         reader.close();

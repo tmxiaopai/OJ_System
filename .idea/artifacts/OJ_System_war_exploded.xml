@@ -87,9 +87,8 @@
           <element id="library" level="project" name="Maven: ognl:ognl:3.1.12" />
           <element id="library" level="project" name="Maven: org.attoparser:attoparser:2.0.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" />
-          <element id="library" level="project" name="Maven: org.webjars:bootstrap:3.3.7" />
-          <element id="library" level="project" name="Maven: org.webjars:jquery:1.11.1" />
-          <element id="library" level="project" name="Maven: org.webjars.bower:jquery:3.4.1" />
+          <element id="library" level="project" name="Maven: org.apache.directory.studio:org.apache.commons.codec:1.8" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.13" />
         </element>
       </element>
       <element id="directory" name="META-INF">

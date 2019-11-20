@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class FileWrite {
     public static void main(String[] args) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("output.java",true));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("M.java",true));
         String content="public class M {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.println(\"ok current\");\n" +
