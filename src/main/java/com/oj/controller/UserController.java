@@ -4,12 +4,10 @@ import com.oj.bean.*;
 import com.oj.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.*;
-import java.text.DecimalFormat;
 import java.util.List;
 
 @Controller
@@ -35,21 +33,6 @@ public class UserController {
 
     @RequestMapping("/")
     public String home() {
-        System.out.println("之前的输出");
-        PrintStream oldPrintStream = System.out;
-        FileOutputStream bos = null;
-        try {
-            bos = new FileOutputStream("output.txt");
-            System.setOut(new PrintStream(bos));
-            System.out.println("之后的输出new");
-            System.setOut(oldPrintStream);
-            System.out.println("最后的输出");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return "ordinaryMenu/home";
     }
 
@@ -146,7 +129,6 @@ public class UserController {
     @RequestMapping("/faqContent")
     public String readFaq() throws FileNotFoundException {
         InputStream f = new FileInputStream("static/FAQ.md");
-
         BufferedReader buffer = new BufferedReader(new InputStreamReader(f));
         System.out.println(buffer.toString());
         return buffer.toString();
