@@ -16,7 +16,7 @@ import java.io.*;
 public class JudgeService {
 
     //将字符存储为文件
-    public void writeFile(String content, String filename) {
+    public boolean writeFile(String content, String filename) {
         BufferedWriter bw;
         try {
             bw = new BufferedWriter(new FileWriter(filename, false));
@@ -25,8 +25,10 @@ public class JudgeService {
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("文件存入异常");
+            return false;
         }
-
+        return true;
 
         /*FileOutputStream bos = null;
         try {
@@ -58,11 +60,12 @@ public class JudgeService {
 
 
     //判度文件内容是否相同
-    public boolean fileCompare(String outFileName, String fileName){
+    public boolean fileCompare(String outFileName, String fileName) {
 
-        File file1=new File(outFileName+".txt");
-        File file2=new File(fileName=".txt");
-        if (file1.length()!=file2.length()){
+        File file1 = new File(outFileName + ".txt");
+        File file2 = new File(fileName = ".txt");
+
+        if (file1.length() != file2.length()) {
             return false;
         }
 
@@ -121,7 +124,7 @@ public class JudgeService {
     public String judgeCode(String sourceCode, Integer ouId) {
         String sourceFile = String.valueOf(ouId);
         writeFile(sourceCode, sourceFile);
-        if(complierCode(sourceFile)){
+        if (complierCode(sourceFile)) {
             runCode(sourceFile);
         }
         return "编译失败";
@@ -137,11 +140,11 @@ public class JudgeService {
             e.printStackTrace();
             System.out.println("编译的时候出现了问题。。。");
         }
-        String outname=filename + "compiler.txt";
+        String outname = filename + "compiler.txt";
         writeFile(result, outname);
-        if(new File(outname).length()==0){
+        if (new File(outname).length() == 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -149,10 +152,10 @@ public class JudgeService {
     //运行代码
     public String runCode(String filename) {
         try {
-            System.out.println("宗内存"+Runtime.getRuntime().totalMemory());
-            System.out.println("空闲内存"+Runtime.getRuntime().freeMemory());
+            System.out.println("宗内存" + Runtime.getRuntime().totalMemory());
+            System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
             String result = execCmd("java " + filename, null);
-            System.out.println("空闲内存"+Runtime.getRuntime().freeMemory());
+            System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
             System.out.println(result);
             writeFile(result, filename + "run.txt");
         } catch (Exception e) {

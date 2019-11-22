@@ -7,7 +7,7 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://39.106.74.147:3306/db_oj</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="db_oj@localhost" uuid="47df7fae-d3d0-433f-89cc-583fd405f3c8">
+    <data-source source="LOCAL" name="MySQL - db_oj@localhost" uuid="47df7fae-d3d0-433f-89cc-583fd405f3c8">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

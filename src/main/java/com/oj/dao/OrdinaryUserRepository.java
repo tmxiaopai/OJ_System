@@ -15,4 +15,7 @@ public interface OrdinaryUserRepository extends JpaRepository<OrdinaryUser,Integ
     @Query("From OrdinaryUser order by ouAllPass desc")
     public List<OrdinaryUser> rankListByPassCount();
 
+    @Query("from OrdinaryUser  where uId = :uid")
+    public OrdinaryUser findByUid(Integer uid);
+
 }

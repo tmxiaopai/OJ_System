@@ -10,6 +10,10 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/myJs.js"></script>
     <script src="js/page.js"></script>
+    <script th:inline="javascript">
+        var message = [[${message}]];
+        if (message != null) alert(message);
+    </script>
 </head>
 <body class="container-fluid">
 <!--搜索框和标签组-->
@@ -19,7 +23,7 @@
             <div class="col-sm-6">
                 <input type="text" id="sc" name="content" class="form-control" placeholder="题号/题名">
             </div>
-            <input type="submit" class="btn btn-success" id="ss"  value="Search">
+            <input type="submit" class="btn btn-success" id="ss" value="Search">
         </form>
     </div>
     <div id="subjectmenu" class="col-sm-4 col-sm-offset-2">
@@ -28,9 +32,9 @@
                 难度 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu selectmenu">
-                <li><a href="#">简单</a></li>
-                <li><a href="#">中等</a></li>
-                <li><a href="#">困难</a></li>
+                <li><a href="/searchByDegree?degree=0">简单</a></li>
+                <li><a href="/searchByDegree?degree=1">中等</a></li>
+                <li><a href="/searchByDegree?degree=2">困难</a></li>
             </ul>
         </div>
         <div class="btn-group">
@@ -69,11 +73,11 @@
         </tr>
         </thead>
         <tbody th:each="subject:${subjects}">
-        <tr>
-            <td th:text="${subject.SId}"></td>
-            <a href="/sub" target="_blank"><td th:text="${subject.SNum}"></td></a>
-            <td th:text="${subject.SName}"><a href="/sub" target="_blank"></a> </td>
-            <td><span class="glyphicon glyphicon-ok-circle"></span> </td>
+        <tr class="sitem">
+            <td><a th:href="@{'/subjectInfo?sid='+${subject.SId}}" target="_blank"><span th:text="${subject.SId}"></span></a></td>
+            <td><a th:href="@{'/subjectInfo?sid='+${subject.SId}}" target="_blank"><span th:text="${subject.SNum}"></span></a></td>
+            <td><a th:href="@{'/subjectInfo?sid='+${subject.SId}}" target="_blank"><span th:text="${subject.SName}"></span></a></td>
+            <td><span class="glyphicon glyphicon-ok-circle"></span></td>
             <td>
                 <span th:text="${subject.PassRate}"></span>
                 (<span th:text="${subject.SAllPass}"></span>/
@@ -90,10 +94,15 @@
         <div id="pager" class="pager clearfix">
         </div>
     </div>
+    <script>
+        $(".sitem").click(function () {
+            $.load("/faq");
+        });
+    </script>
     <script src="js/page.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         $("#pager").zPager({
-            totalData: 50,
+            totalData: 10,
             htmlBox: $('#wraper'),
             btnShow: true,
             ajaxSetData: false

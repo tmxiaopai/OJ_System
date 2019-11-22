@@ -2,16 +2,67 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>题目信息</title>
+    <title>Menu</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="editer/github.css">
     <link rel="stylesheet" href="css/myCss.css">
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/myJs.js"></script>
+    <script src="editer/editormd.js"></script>
+    <script src="editer/raphael.min.js"></script>
+    <script src="editer/sequence-diagram.min.js"></script>
+    <script src="editer/flowchart.min.js"></script>
+    <script src="editer/jquery.flowchart.min.js"></script>
+    <script src="editer/marked.min.js"></script>
+    <script src="editer/prettify.min.js"></script>
+    <script src="editer/underscore.min.js"></script>
+    <script src="js/md.js"></script>
 </head>
 <body class="container-fluid">
-<div class="col-sm-12">
+<div id="subjecttitle" class="col-md-12 text-center">
+    <b><span th:text="${subject.sName}"></span><br></b>
+    <small>
+        通过率：<span th:text="${(subject.passRate+ 0.8)*100}"></span>% |
+        提交次数：<span th:text="${subject.sAllSubmit}"></span> |
+        难度：
+        <span class="list-inline" th:switch="${subject.sDegree}">
+            <span th:case="0" th:text="简单"></span>
+            <span th:case="1" th:text="中等"></span>
+            <span th:case="2" th:text="困难"></span>
+        </span> |
+        内存限制：<span th:text="${subject.memoryLimit}"></span> |
+        时间限制：<span th:text="${subject.timeLimit}"></span>
+    </small>
+</div>
+
+<div class="col-md-6" id="subjectitem">
 
 </div>
+<form action="/judgeCode" method="post">
+    <input name="sNum" type="hidden"  th:value="${subject.sNum}">
+    <div class="col-md-6" id="editpage">
+
+        <div class="col-md-12">
+            <textarea name="codes" rows="25" style="width: 100%"></textarea>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-2 col-sm-6">
+                <select id="" name="clanguage" class="selectpicker show-tick form-control" data-actions-box="true">
+                    <option value="java">Java</option>
+                    <option value="c">C</option>
+                    <option value="cpp">C++</option>
+                    <option value="python">Python</option>
+                </select><br>
+                <button class="btn btn-success" style="width: 82px">提交</button>
+            </div>
+            <div class="col-md-10 col-sm-10" id="reback">这里放的反馈信息：编译问题、运行问题、通过</div>
+        </div>
+
+    </div>
+</form>
+<script>
+
+</script>
 </body>
 </html>

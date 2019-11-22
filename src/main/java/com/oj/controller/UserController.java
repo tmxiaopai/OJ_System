@@ -3,15 +3,11 @@ package com.oj.controller;
 import com.oj.bean.*;
 import com.oj.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -105,7 +101,7 @@ public class UserController {
         return "ordinarySubject/subject_list";
     }
 
-    @RequestMapping(value = "/searchSubject")
+    @RequestMapping("/searchSubject")
     public String searchSubject(ModelMap model, HttpServletRequest request) {
         String content = request.getParameter("content");
 
@@ -129,8 +125,21 @@ public class UserController {
         }
 
 
-        System.out.println(subjects.size());
+        if(subjects.size()==0){
+            subjects=subjectRepository.findAll();
+            model.addAttribute("message","meiyozhaodaoxiangguanjilu");
+        }
+
         model.addAttribute("subjects", subjects);
+        return "ordinarySubject/subject_list";
+    }
+
+    @RequestMapping("/searchByDegree")
+    public String searchByDegree(@RequestParam("degree")short degree, ModelMap model) {
+
+        List<Subject> subjects = null;
+        subjects=subjectRepository.findByDegree(degree);
+        model.addAttribute("subjects",subjects);
         return "ordinarySubject/subject_list";
     }
 
@@ -173,5 +182,12 @@ public class UserController {
         return buffer.toString();
     }
 
+    @RequestMapping("/subjectInfo")
+    public String subjectInfo(@RequestParam("sid")Integer sid, ModelMap model){
+        System.out.println(sid);
+        Subject subject = subjectRepository.getOne(sid);
+        model.addAttribute("subject",subject);
+        return "ordinarySubject/subject_info";
+    }
 
 }
