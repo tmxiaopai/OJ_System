@@ -13,7 +13,7 @@
 <div class="col-sm-12 contestset" th:each="contest:${contests}">
     <div class="col-sm-12 contestitem">
         <div class="col-sm-9 text-left">
-            <a th:href="@{'/contest_menu?cId='+${contest.getCId()}}" target="home_iframe"><p class="contestname" th:text="${contest.getCName()}" >18 第三届程序员模拟赛</p></a>
+            <a th:href="@{'/contest_menu?cId='+${contest.getCId()}}" th:target="home_iframe"><p class="contestname" th:text="${contest.getCName()}" >18 第三届程序员模拟赛</p></a>
             <p class="contesttime">
                 <span th:text="${contest.startTime}"></span>--
                 <span th:text="${contest.endTime}"></span>

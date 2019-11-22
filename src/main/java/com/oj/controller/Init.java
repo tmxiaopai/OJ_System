@@ -126,6 +126,8 @@ public class Init {
 
         System.out.println(administrator1.getNotices().size());
 
+
+
         return "initsuccess";
 
 
