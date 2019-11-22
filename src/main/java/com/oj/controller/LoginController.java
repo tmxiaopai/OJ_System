@@ -26,33 +26,41 @@ public class LoginController {
     private OrdinaryUserRepository ordinaryUserRepository;
 
 
-    @RequestMapping("/login")
+    @RequestMapping("/")
     public String Login(HttpServletRequest request, ModelMap model) {
         //获取帐号密码
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         System.out.println(email);
         System.out.println(password);
-        List<User> users = userRepository.findByEmail(email);
-        System.out.println("查询结果条数:"+users.size());
-        if (users.size() != 0) {
-            User user = users.get(0);
-            if (password.equals(user.getUPassword())) {
-                OrdinaryUser ou = ordinaryUserRepository.findByUid(user.getUId());
-                request.getSession().setAttribute("user", user);
-                request.getSession().setAttribute("ou", ou);
-                model.addAttribute("user", user);
-                model.addAttribute("ou", ou);
+        if (email!=null && password!=null) {
+            List<User> users = userRepository.findByEmail(email);
+            System.out.println("查询结果条数:" + users.size());
+            if (users.size() != 0) {
+                User user = users.get(0);
+                System.out.println(user.getUNickname());
+                if (password.equals(user.getUPassword())) {
+                    OrdinaryUser ou = ordinaryUserRepository.findByUid(user.getUId());
+                    request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("ou", ou);
+                    model.addAttribute("user", user);
+                    model.addAttribute("ou", ou);
+                    model.addAttribute("logflag", true);
+                } else {
+                    model.addAttribute("logmes", "密码不正确,请重新输入！");
+                    model.addAttribute("email", email);
+                    model.addAttribute("logflag", false);
+                }
+
+
             } else {
-                model.addAttribute("logmes", "密码不正确,请重新输入！");
-                model.addAttribute("email", email);
+                model.addAttribute("logmes", "该帐号不存在，请重新输入！");
+                model.addAttribute("logflag", false);
             }
-
-
         } else {
-            model.addAttribute("logmes", "该帐号不存在，请重新输入！");
+            model.addAttribute("logflag", false);
         }
-        //设置用户邮箱,
+
         return "ordinaryMenu/home";
     }
 }

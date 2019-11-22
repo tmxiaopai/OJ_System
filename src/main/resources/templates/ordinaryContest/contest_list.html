@@ -12,12 +12,16 @@
 <body class="container-fluid">
 <div class="col-sm-12 contestset" th:each="contest:${contests}">
     <div class="col-sm-12 contestitem">
-        <div class="col-sm-6 text-left">
-            <a href="/contest_menu" target="home_iframe"><p class="contestname" th:text="${contest.getCName()}" >18 第三届程序员模拟赛</p></a>
-            <p class="contesthold" th:text="${contest.getCreateUserId().getUId().getUNickname()}">&nbsp;&nbsp;举办方：软件教研室</p>
+        <div class="col-sm-9 text-left">
+            <a th:href="@{'/contest_menu?cId='+${contest.getCId()}}" target="home_iframe"><p class="contestname" th:text="${contest.getCName()}" >18 第三届程序员模拟赛</p></a>
+            <p class="contesttime">
+                <span th:text="${contest.startTime}"></span>--
+                <span th:text="${contest.endTime}"></span>
+            </p>
+
         </div>
-        <div class="col-sm-6 text-right" th:switch="${contest.isFinish}">
-            <p class="contesttime" th:text="${contest.startTime} +' '+${contest.endTime}">2019.12.35 14:00:00 +4:00:00</p>
+        <div class="col-sm-3 text-right" th:switch="${contest.isFinish}">
+            <p class="contesthold" th:text="${contest.getCreateUserId().getUId().getUNickname()}">&nbsp;&nbsp;举办方：软件教研室</p>
             <p class="conteststate" th:case="0" th:text="未开始"></p>
             <p class="conteststate" th:case="1" th:text="进行中"></p>
             <p class="conteststate" th:case="2" th:text="已结束"></p>

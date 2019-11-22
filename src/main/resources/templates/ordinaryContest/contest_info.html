@@ -15,23 +15,27 @@
         <tbody>
         <tr>
             <th>竞赛名称</th>
-            <td>程序员大赛</td>
+            <td><span th:text="${thiscontest.getCName()}"></span></td>
         </tr>
         <tr>
             <th>竞赛描述</th>
-            <td>河北地质大学举办的第三届程序设计选拔赛，之三发你的健康v你的看法呢哦对你发了</td>
+            <td><span th:text="${thiscontest.getCDescription()}"></span></td>
         </tr>
         <tr>
             <th>开始时间</th>
-            <td>2019.02.21 14:15:15</td>
+            <td><span th:text="${thiscontest.getStartTime()}"></span></td>
         </tr>
         <tr>
             <th>结束时间</th>
-            <td>2019.02.21 14:15:15</td>
+            <td><span th:text="${thiscontest.getEndTime()}"></span></td>
         </tr>
         <tr>
             <th>竞赛状态</th>
-            <td>未开始</td>
+            <td th:switch="${thiscontest.isFinish}">
+                <span th:case="0" th:text="未开始"></span>
+                <span th:case="1" th:text="进行中"></span>
+                <span th:case="2" th:text="已结束"></span>
+            </td>
         </tr>
         </tbody>
     </table>

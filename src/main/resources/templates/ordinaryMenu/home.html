@@ -10,7 +10,7 @@
     <script src="js/myJs.js"></script>
     <script th:inline="javascript">
         var logmes = [[${logmes}]];
-        if (logmes null) {
+        if (logmes != null) {
             alert(logmes);
         }
     </script>
@@ -34,21 +34,23 @@
                 <span id="contest_btn" class="glyphicon glyphicon-fire">比赛</span>
             </a>
         </li>
-        <li class="col-sm-2 col-sm-offset-6">
+        <li id="practice" class="col-sm-2 col-sm-offset-6 menus" th:if="${logflag}">
+            <a href="/subject_menu" target="home_iframe">
+                <span id="practice_btn" class="glyphicon glyphicon glyphicon-user" th:text="${user.uNickname}"></span>
+            </a>
+        </li>
+        <li class="col-sm-2 col-sm-offset-6" th:if="${not logflag}">
             <a href="#">
                 <span class="" data-toggle="modal" data-target="#myModal">登录/注册</span>
             </a>
-            <!-- Button trigger modal -->
-            <!--            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">-->
-            <!--                登录/注册-->
-            <!--            </button>-->
         </li>
+
     </ul>
 </div>
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,7 +59,7 @@
                 <h4 class="modal-title" id="myModalLabel">登录/注册</h4>
                 如果账号不存在将会自动注册账号！请查收验证邮件。
             </div>
-            <form action="/login" method="post">
+            <form action="/" method="post">
                 <div class="modal-body">
                     &emsp;
                     账号：<input type="email" name="email" placeholder="Email">&emsp;&emsp;&emsp;&emsp;
