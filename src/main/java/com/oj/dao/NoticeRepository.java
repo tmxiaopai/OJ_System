@@ -2,6 +2,11 @@ package com.oj.dao;
 
 import com.oj.bean.Notice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author TMXIAOPAI
@@ -9,4 +14,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @package_name com.oj.dao
  */
 public interface NoticeRepository extends JpaRepository<Notice,Integer> {
+    @Query(value = "delete  from Notice n where n.nId=?1 ")
+    List<Notice> findbynamett(String nname);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete  from Notice n where n.nId=?1 ")
+    void deletenoticeid(int id);
 }
