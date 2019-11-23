@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ItemBank</title>
+    <meta name="renderer" content="webkit">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  	<link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <script src="js/jquery-3.4.1.min.js"></script>
+</head>
+<style>
+	a:hover{
+		text-decoration: none;
+	}
+</style>
+<body>
+  <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-tab">
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+	                  <form class="layui-form layui-form-pane">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+<!--								<label class="layui-form-label">公告编号</label>-->
+<!--								<div class="layui-input-inline">-->
+<!--									<input type="text" name="nId" id="id" placeholder="请输入" autocomplete="off" class="layui-input" />-->
+<!--								</div>-->
+								<label class="layui-form-label">公告名称</label>
+								<div class="layui-input-inline">
+									<input type="text" name="nName" id="nna" placeholder="请输入" autocomplete="off" class="layui-input" />
+								</div>
+							</div>	
+						</div>
+						<button class="layui-btn" id="btnSearch" type="button">立即查询</button>
+					</form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+         </div>
+
+  <div class="layui-card-body">
+    <table class="layui-hide" id="test-table-page" lay-filter="toobar"></table>
+        <script type="text/html" id="toobar">
+   			 <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="check">查看</a>
+   			 <a class="layui-btn layui-btn-xs"  lay-event="modify">修改</a>
+   			 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+  		</script>
+  </div>
+<!--修改公告弹窗-->
+<div hidden="hidden" id="notice_modify" >
+			<form class="layui-form" id="noticemodify">
+                <div class="layui-row layui-col-space10 layui-form-item" hidden="hidden">
+                    <div class="layui-col-lg7">
+                        <label class="layui-form-label">公告名称:</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nId"  id="nnid" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-col-lg5">
+                    </div>
+                </div>
+				<div class="layui-row layui-col-space10 layui-form-item">
+					<div class="layui-col-lg7">
+						<label class="layui-form-label">公告名称:</label>
+						<div class="layui-input-block">
+							<input type="text" name="nName"  id="modifyname" class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-col-lg5">																		
+					</div>
+				</div>
+				<div class="layui-row layui-col-space10 layui-form-item">
+					<div class="layui-col-lg7">
+						<label class="layui-form-label">公告内容:</label>
+						<div class="layui-input-block">
+							<textarea name="nContent" id="modifycontent" class="layui-textarea"></textarea>
+						</div>
+					</div>
+					<div class="layui-col-lg5">																		
+					</div>
+				</div>
+			<hr>						
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button type="button" class="layui-btn" id="btn_modify">确认修改</button>
+					</div>
+				</div>
+			</form>
+		</div>
+<!--查看公告弹窗-->		
+<div hidden="hidden" id="notice_check" >
+			<form class="layui-form" id="noticecheck">
+				<div class="layui-row layui-col-space10 layui-form-item">
+					<div class="layui-col-lg7">
+						<label class="layui-form-label">公告名称:</label>
+						<div class="layui-input-block">
+							<input type="text" name="nName" id="chenkname" readonly="readonly"  class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-col-lg5">																		
+					</div>
+				</div>
+				<div class="layui-row layui-col-space10 layui-form-item">
+					<div class="layui-col-lg7">
+						<label class="layui-form-label">公告内容:</label>
+						<div class="layui-input-block">
+							<textarea name="nContent" id="checkcontent" readonly="readonly" class="layui-textarea"></textarea>
+						</div>
+					</div>
+					<div class="layui-col-lg5">																		
+					</div>
+				</div>
+			<hr>						
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button type="button" class="layui-btn" id="btn_save">确定</button>							
+					</div>
+				</div>
+			</form>
+		</div>
+
+  <script src="layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: 'layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function(){
+    var admin = layui.admin
+    ,table = layui.table;
+  
+    var noticetable = table.render({
+      elem: '#test-table-page'
+      ,url: 'findallnotice'
+		,method:'POST'
+      ,cols: [
+      		[
+				{field:'nId', width:100, title: '编号', sort: true}
+				,{field:'nName', width:150, title: '名称', sort: true}
+				,{field:'nContent', width:250, title: '内容', sort: true}
+				,{field:'nTime', width:150, title: '发布日期', sort: true}
+				,{fixed : 'right',title : '操作',align : 'center',toolbar : '#toobar',minWidth:150},
+      		]
+		]
+      ,page: true
+    });
+		//查询
+      $("#btnSearch").on("click",function(){
+          var nId=$('#id').val();
+          var nName=$('#nna').val();
+          var json={};
+          json.nId=nId;
+          json.nName=nName;
+          var data=JSON.stringify(json);
+          noticetable.reload({
+              where:{
+                  data:data
+              }
+          });
+      });
+//修改事件
+    	table.on('tool(toobar)',function(obj){
+  		var data = obj.data;
+  		if(obj.event==='modify'){
+  			 $("#notice_modify").prop("style","display:block;margin:10px;");
+  			 $("#nnid").val(data.nId)
+             $("#modifyname").val(data.nName)
+             $("#modifycontent").val(data.nContent)
+  			  layer.open({
+	            title:'修改公告',
+	            shadeClose:true,
+	            area:['400px','323px'],
+	            type:1,
+	            content:$('#notice_modify'), //传入任意的文本或html
+	            end:function()
+	            {
+	                $("#notice_modify").prop("style","display:none;");
+	            }        
+	           });
+  		}
+  		else if(obj.event==='delete'){
+			layer.confirm('确认删除么',function (index) {
+               console.log(data)
+                $.ajax({
+                    type: "post",
+                    url:'deletenotice',
+                    data: {id:data.nId},
+                    dataType: "json",
+                    async:false,
+                    success:function(data) {
+                        if(data.code == 0){
+                            layer.msg(data.msg, {icon: 1,time:10000});
+                            layer.closeAll();
+                            noticetable.reload();
+                        }else{
+                            layer.msg('删除失败', {icon: 2});
+                            layer.closeAll();
+                            noticetable.reload();
+                        }
+                    }
+                });
+			})
+		}
+  		else{
+  			 $("#notice_check").prop("style","display:block;margin:10px;");
+  			 $("#chenkname").val(data.nName)
+			 $("#checkcontent").val(data.nContent)
+  			  layer.open({
+	            title:'查看公告',
+	            shadeClose:true,
+	            area:['400px','323px'],
+	            type:1,
+	            content:$('#notice_check'), //传入任意的文本或html
+	            end:function()
+	            {
+	                $("#notice_check").prop("style","display:none;");
+	            }        
+	           });
+  		}
+  	})
+	  $("body").on("click","#btn_save",function () {
+		  layer.closeAll('page');
+	  })
+	  // $("body").on("click","#btndelete",function () {
+		//   var data=$('#noticedelete').serialize();
+		//   var url = "deletenotice";
+		//   $.post(
+		//   		url,
+		// 		data,
+		// 		  function (data,status,xhr) {
+		// 			  if (status=="success"){
+		// 			  	if(data.code==0){
+		// 			  		layer.msg(data.msg);
+		// 			  		layer.closeAll('page');
+		// 			  		noticetable.reload();
+		// 				}
+		// 			  } else {
+		// 			  	layer.closeAll('page');
+		// 			  	return layer.msg("删除失败")
+		// 			  }
+		// 		  },"json").fail(function () {
+		// 	  layer.closeAll('page');
+		// 	  return layer.msg("请求失败")
+		//   })
+	  // })
+      $("body").on("click","#btn_modify",function () {
+          var data = $('#noticemodify').serialize();
+          var url  = 'modifynotice';
+          $.post(
+              url,
+              data,
+              function (data,status,xhr) {
+                  if(status=="success"){
+                      if(data.code==0){
+                          layer.msg(data.msg);
+                          layer.closeAll('page');
+                          noticetable.reload();
+                      }
+                  }else{
+                      layer.closeAll('page');
+                      return layer.msg("修改失败")
+                  }
+              },"json").fail(function () {
+              layer.closeAll('page');
+              return layer.msg("请求失败")
+          })
+      })
+  });
+  </script>
+</body>
+</html>

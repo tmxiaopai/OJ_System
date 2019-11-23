@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ItemBank</title>
+    <meta name="renderer" content="webkit">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  	<link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <script src="js/jquery-3.4.1.min.js"></script>
+</head>
+<style>
+	a:hover{
+		text-decoration: none;
+	}
+</style>
+<body>
+  <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-tab">
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+	                  <form name="searchform" id="searchform" class="layui-form layui-form-pane" method="post" action="">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">用户昵称</label>
+								<div class="layui-input-inline">
+									<input type="text" name="uNickname" id="unn" placeholder="请输入" autocomplete="off" class="layui-input" />
+								</div>
+							</div>	
+						</div>
+						<button class="layui-btn" id="btnSearch" type="button">立即查询</button>
+					</form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+         </div>
+
+  <div class="layui-card-body">
+    <table class="layui-hide" id="test-table-page" lay-filter="toobar"></table>
+        <script type="text/html" id="toobar">
+   			 <a class="layui-btn layui-btn-xs"  lay-event="modify">更改权限</a>
+  		</script>
+  </div>
+<!--更改权限弹窗-->    
+<div hidden="hidden" id="power" >
+			<form class="layui-form" id="power_modify">
+				<div class="layui-row layui-col-space10 layui-form-item">
+					<div class="layui-col-lg7">
+						<label class="layui-form-label">用户ID:</label>
+						<div class="layui-input-block">
+							<input type="text" name="uId"  id="uId" readonly="readonly"  class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-col-lg5">																		
+					</div>
+				</div>
+				<div class="layui-row layui-col-space10 layui-form-item">
+					<div class="layui-col-lg7">
+						<label class="layui-form-label">用户昵称:</label>
+						<div class="layui-input-block">
+							<input type="text" name="uNickname"  id="uNickname" readonly="readonly"  class="layui-input"/>
+						</div>
+					</div>
+					<div class="layui-col-lg5">																		
+					</div>
+				</div>
+				<div class="layui-row layui-col-space10 layui-form-item">
+					<div class="layui-col-lg7">
+						<label class="layui-form-label">设置权限:</label>
+						<div class="layui-input-block">
+							<select name="uIdentity" id="uIdentity" lay-verify="">
+                    			<option value="1" disabled>普通用户</option>
+                    			<option value="2" selected>管理员</option>
+                  			</select> 					
+						</div>
+					</div>
+					<div class="layui-col-lg5">																		
+					</div>
+				</div>
+			<hr>						
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button type="button" class="layui-btn" id="btn_save">确认修改</button>							
+					</div>
+				</div>
+			</form>
+		</div>
+  
+  <script src="layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: 'layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function(){
+    var admin = layui.admin
+    ,table = layui.table;
+  
+    var usertable=table.render({
+      elem: '#test-table-page'
+      ,url: 'findalluser'
+	  ,method:'POST'
+      ,cols: [
+      		[
+				{field:'uId', width:100, title: '用户ID', sort: true}
+				,{field:'uNickname', width:200, title: '昵称'}
+				,{field:'uMail', width:150, title: '邮箱'}
+				,{field:'uPhone', width:150, title: '电话'}
+				,{field:'uSex', width:80, title: '性别', sort: true}
+				,{fixed : 'right',title : '操作',align : 'center',toolbar : '#toobar',minWidth:150},
+      		]
+		]
+      ,page: true
+    });
+    
+//  admin.popup({
+//    content: '演示数据均为静态模拟数据，因此【切换分页和条数时】发现数据未变并非 BUG。实际使用时改成真实接口即可。'
+//    ,area: '300px'
+//    ,offset: '15px'
+//    ,shade: false
+//  });
+	  //查询
+	  $("#btnSearch").on("click",function(){
+		  var uNickname=$('#unn').val();
+		  var json={};
+		  json.uNickname=uNickname;
+		  var data=JSON.stringify(json);
+		  usertable.reload({
+			  where:{
+				  data:data
+			  }
+		  });
+	  });
+	//更改权限事件
+    	table.on('tool(toobar)',function(obj){
+  		var data = obj.data;
+  		if(obj.event==='modify'){
+  			 $("#power").prop("style","display:block;margin:10px;");
+  			 $('#uId').val(data.uId)
+			 $('#uNickname').val(data.uNickname)
+			 $('#uIdentity').val(data.uIdentity)
+  			  layer.open({
+	            title:'均为普通用户，只能更改成管理员权限',
+	            shadeClose:true,
+	            area:['400px','323px'],
+	            type:1,
+	            content:$('#power'), //传入任意的文本或html
+	            end:function()
+	            {
+	                $("#power").prop("style","display:none;");
+	            }        
+	           });
+  		}
+  	})
+	  $("body").on("click","#btn_save",function () {
+		  var data = $('#power_modify').serialize();
+		  var url  = 'modifypower';
+		  $.post(
+		  		url,
+				data,
+				function (data,status,xhr) {
+					if(status=="success"){
+						if(data.code==0){
+							layer.msg(data.msg);
+							layer.closeAll('page');
+							usertable.reload();
+						}
+					}else{
+						layer.closeAll('page');
+						return layer.msg("权限更改失败")
+					}
+				  },"json").fail(function () {
+				  	layer.closeAll('page');
+			  return layer.msg("请求失败")
+		  })
+	  })
+  });
+  </script>
+</body>
+</html>

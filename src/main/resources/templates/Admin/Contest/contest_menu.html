@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/MyCssTT.css">
+    <script src="../../js/jquery-3.4.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/myJsTT.js"></script>
+</head>
+<body>
+<!--侧边菜单-->
+<div id="aside" class="col-sm-2">
+    <ul class="list-unstyled text-center">
+        <a href="tt_contest_list" target="my_iframe">
+            <li class="topli" style="background-color: #eeeeee">Contest List</li>
+        </a>
+        <a href="tt_contest_create" target="my_iframe">
+            <li class="bottomli" style="background-color: #ffffff">Create Contest</li>
+        </a>
+    </ul>
+</div>
+<!--内容-->
+<div id="content" class="col-sm-10 embed-responsive embed-responsive-16by9">
+    <iframe name="my_iframe" src="tt_contest_list" class="embed-responsive-item"></iframe>
+</div>
+
+<script>
+    var height = document.documentElement.clientHeight - 56;
+    var mydiv = document.getElementById("content");
+    mydiv.style.height = height + "px";
+</script>
+</body>
+</html>

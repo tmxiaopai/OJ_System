@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ItemBank</title>
+    <meta name="renderer" content="webkit">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  	<link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-tab">
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+	                  <form name="searchform" id="searchform" class="layui-form layui-form-pane" method="post" action="">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+<!--								<label class="layui-form-label">比赛编号</label>-->
+<!--								<div class="layui-input-inline">-->
+<!--									<input type="text" name="cId" id="id" placeholder="请输入" autocomplete="off" class="layui-input" />-->
+<!--								</div>-->
+								<label class="layui-form-label">比赛名称</label>
+								<div class="layui-input-inline">
+									<input type="text" name="cName" id="cn" placeholder="请输入" autocomplete="off" class="layui-input" />
+								</div>
+							</div>	
+						</div>
+						<button class="layui-btn" id="btnSearch" type="button">立即查询</button>
+					</form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+         </div>
+
+  <div class="layui-card-body">
+    <table class="layui-hide" id="test-table-page"></table>
+  </div>
+
+  
+  <script src="layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: 'layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function(){
+    var admin = layui.admin
+    ,table = layui.table;
+  
+    var contesttable=table.render({
+      elem: '#test-table-page'
+      ,url: 'findallcontest'
+      ,method:'POST'
+      ,cols: [
+          [
+            {field:'cId', width:75, title: '编号', sort: true}
+            ,{field:'cName', width:150, title: '名称'}
+            ,{field:'cCount', width:100, title: '题目数量', sort: true}
+            ,{field:'startTime', width:120, title: '开始时间', sort: true}
+            ,{field:'endTime', width: 120, title: '结束时间',  sort: true}
+            ,{field:'cUserCount', width:100, title: '报名人数', sort: true}
+            ,{field:'cPassword', width:100, title: '比赛密码'}
+            ,{field:'isFinish', minWidth:100, title: '是否完成', sort: true}
+          ]
+        ]
+      ,page: true
+    });
+    
+//  admin.popup({
+//    content: '演示数据均为静态模拟数据，因此【切换分页和条数时】发现数据未变并非 BUG。实际使用时改成真实接口即可。'
+//    ,area: '300px'
+//    ,offset: '15px'
+//    ,shade: false
+//  });
+      //查询
+      $("#btnSearch").on("click",function(){
+          // var cId=$('#id').val();
+          var cName=$('#cn').val();
+          var json={};
+          // json.cId=cId;
+          json.cName=cName;
+          var data=JSON.stringify(json);
+          contesttable.reload({
+              where:{
+                  data:data
+              }
+          });
+      });
+  });
+  </script>
+</body>
+</html>

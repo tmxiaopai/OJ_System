@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ItemBank</title>
+    <meta name="renderer" content="webkit">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  	<link rel="stylesheet" href="layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<style>
+	a:hover{
+		text-decoration: none;
+	}
+</style>
+<body>
+  <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-tab">
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+	                  <form class="layui-form layui-form-pane">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label">题目号码</label>
+								<div class="layui-input-inline">
+									<input type="text" name="sNum" id="snu" placeholder="请输入" autocomplete="off" class="layui-input" />
+								</div>
+								<label class="layui-form-label">题目名称</label>
+								<div class="layui-input-inline">
+									<input type="text" name="sName" id="sna" placeholder="请输入" autocomplete="off" class="layui-input" />
+								</div>
+							</div>	
+						</div>
+						<button class="layui-btn" id="btnSearch" type="button">立即查询</button>
+					</form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+         </div>
+
+  <div class="layui-card-body">
+    <table class="layui-hide" id="test-table-page"></table>、
+    <script type="text/html" id="toobar">
+<!--   			 <a class="layui-btn layui-btn-xs"  lay-event="modify">修改</a>-->
+   			 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+   			 <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="add">录入比赛</a>
+  	</script>
+  </div>
+<!--  录入比赛-->
+  <div hidden="hidden" id="addsubject" >
+      <form class="layui-form" id="add_subject">
+          <div class="layui-row layui-col-space10 layui-form-item">
+              <div class="layui-col-lg7">
+                  <label class="layui-form-label">比赛ID:</label>
+                  <div class="layui-input-block">
+                      <input type="text" name="cId" id="cId" required layverify="required"  class="layui-input"/>
+                  </div>
+              </div>
+              <div class="layui-col-lg5">
+              </div>
+          </div>
+          <hr>
+          <div class="layui-form-item">
+              <div class="layui-input-block">
+                  <button type="button" class="layui-btn" id="btn_save">确定</button>
+              </div>
+          </div>
+      </form>
+  </div>
+  
+  <script src="layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: 'layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function(){
+    var admin = layui.admin
+    ,table = layui.table;
+  
+    var subjecttable = table.render({
+      elem: '#test-table-page'
+      ,url: 'findallsubject'
+      ,method:'POST'
+      ,cols: [
+          [
+            {field:'sNum', width:100, title: '题目号码'}
+            ,{field:'sName', width:200, title: '题目名称'}
+            ,{field:'sAllPass', width:100, title: '通过次数', sort: true}
+            ,{field:'sAllSubmit', title: '提交次数', width: 100, sort: true}
+            ,{field:'passRate', title: '通过率', width: 100, sort: true}
+            ,{field:'sSource', title: '题目源', width: 100, sort: true}
+            ,{fixed : 'right',title : '操作',align : 'center',toolbar : '#toobar',minWidth:150},
+          ]
+        ]
+      ,page: true
+    });
+      //查询
+      $("#btnSearch").on("click",function(){
+          var sNum=$('#snu').val();
+          var sName=$('#sna').val();
+          var json={};
+          json.sNum=sNum;
+          json.sName=sName;
+          var data=JSON.stringify(json);
+          subjecttable.reload({
+              where:{
+                  data:data
+              }
+          });
+      });
+      table.on('tool(toobar)',function(obj){
+          var data = obj.data;
+          // if(obj.event==='modify'){
+          //     $("#notice_modify").prop("style","display:block;margin:10px;");
+          //     layer.open({
+          //         title:'修改公告',
+          //         shadeClose:true,
+          //         area:['400px','323px'],
+          //         type:1,
+          //         content:$('#notice_modify'), //传入任意的文本或html
+          //         end:function()
+          //         {
+          //             $("#notice_modify").prop("style","display:none;");
+          //         }
+          //     });
+          // }
+          if(obj.event==='delete'){
+              layer.confirm('确认删除么',function (index) {
+                  console.log(data)
+                  $.ajax({
+                      type: "post",
+                      url:'deletesubject',
+                      data: {id:data.sNum},
+                      dataType: "json",
+                      async:false,
+                      success:function(data) {
+                          if(data.code == 0){
+                              layer.msg(data.msg, {icon: 1,time:10000});
+                              layer.closeAll();
+                              subjecttable.reload();
+                          }else{
+                              layer.msg('删除失败', {icon: 2});
+                              layer.closeAll();
+                              subjecttable.reload();
+                          }
+                      }
+                  });
+              })
+          }
+          else{
+              $("#addsubject").prop("style","display:block;margin:10px;");
+              layer.open({
+                  title:'查看公告',
+                  shadeClose:true,
+                  area:['400px','323px'],
+                  type:1,
+                  content:$('#add_subject'), //传入任意的文本或html
+                  end:function()
+                  {
+                      $("#add_subject").prop("style","display:none;");
+                  }
+              });
+          }
+      })
+  });
+  </script>
+</body>
+</html>
