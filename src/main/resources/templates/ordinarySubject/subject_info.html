@@ -61,5 +61,23 @@
 
     </div>
 </form>
+<script>
+    $(function () {
+        $("#subjectitem").html('<textarea id="subcon" style="display:none;"></textarea>');
+        var content1=null;
+        $.get("static/subject/[[${subject.sNum}]]/subject.md",function (data,status) {
+            content1=data;
+            $("#subcon").val(content1);
+            editormd.markdownToHTML("subjectitem", {
+                htmlDecode: "style,script,iframe", //可以过滤标签解码
+                emoji: true,
+                taskList:true,
+                tex: true,               // 默认不解析
+                flowChart:true,         // 默认不解析
+                sequenceDiagram:true,  // 默认不解析
+            });
+        })
+    })
+</script>
 </body>
 </html>

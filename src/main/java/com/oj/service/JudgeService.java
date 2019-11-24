@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -17,6 +19,22 @@ public class JudgeService {
 
     //将字符存储为文件
     public boolean writeFile(String content, String filename) {
+
+        /*try {
+            FileOutputStream fos = new FileOutputStream(file, true);
+            StringBuffer sb = new StringBuffer();
+            sb.append(content);
+            fos.write(sb.toString().getBytes("utf-8"));
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;*/
+
+
         BufferedWriter bw;
         try {
             bw = new BufferedWriter(new FileWriter(filename, false));
@@ -41,7 +59,18 @@ public class JudgeService {
             e.printStackTrace();
         }*/
 
-
+        /*PrintStream bw;
+        try {
+            bw = new PrintStream(new FileOutputStream("/home/tmxiaopai/IdeaProjects/OJ_System/src/main/webapp/static/123.c"));
+            bw.println(content);
+            bw.flush();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("文件存入异常");
+            return false;
+        }
+        return true;*/
     }
 
     //读文件
@@ -58,6 +87,12 @@ public class JudgeService {
         reader.close();
     }
 
+
+    public String formateDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+
+    }
 
     //判度文件内容是否相同
     public boolean fileCompare(String outFileName, String fileName) {
@@ -121,49 +156,53 @@ public class JudgeService {
     }
 
     //判题过程
-    public String judgeCode(String sourceCode, Integer ouId) {
+    /*public String judgeCode(String sourceCode, Integer ouId) {
         String sourceFile = String.valueOf(ouId);
-        writeFile(sourceCode, sourceFile);
+        writeFile(sourceCode, new File(sourceFile));
         if (complierCode(sourceFile)) {
             runCode(sourceFile);
         }
         return "编译失败";
-    }
+    }*/
 
     //编译代码
-    public boolean complierCode(String filename) {
+    public String complierCode(String filename) {
         String result = null;
         try {
-            String cmd = "javac " + filename + ".java";
+            System.out.println("要编译的文件名称为:" + filename);
+            String cmd = "javac "+filename;
             result = execCmd(cmd, null);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("编译的时候出现了问题。。。");
         }
-        String outname = filename + "compiler.txt";
-        writeFile(result, outname);
-        if (new File(outname).length() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return result;
+    }
+
+    //判断是否编译成功
+    boolean isComplierSuccess(String filename){
+
     }
 
     //运行代码
-    public String runCode(String filename) {
+    public boolean runCode(String filename) {
         try {
             System.out.println("宗内存" + Runtime.getRuntime().totalMemory());
             System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
             String result = execCmd("java " + filename, null);
             System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
             System.out.println(result);
-            writeFile(result, filename + "run.txt");
+            writeFile(result, new File(filename + "run.txt"));
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("运行的时候出现了问题");
         }
 
-        return "";
+
+        //比较代码运行结果是否一致
+
+
+        return false;
     }
 
     //调用系统命令

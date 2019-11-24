@@ -87,6 +87,7 @@
           <element id="library" level="project" name="Maven: ognl:ognl:3.1.12" />
           <element id="library" level="project" name="Maven: org.attoparser:attoparser:2.0.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.54" />
         </element>
       </element>
       <element id="directory" name="META-INF">
