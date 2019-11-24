@@ -2,6 +2,7 @@ package com.oj.controller;
 
 import com.oj.bean.OrdinaryUser;
 import com.oj.service.JudgeService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -54,29 +55,28 @@ public class JudgeController {
         //获取用户ID，拼接题目号，构成源文件的文件名
         OrdinaryUser ou = (OrdinaryUser) request.getSession().getAttribute("ou");
         String sourceFileName = ou.getOuId() + sNum + hz;
-        /*File file = new File("/home/OJ_Subject/"+sourceFileName);
+        File file = new File("G:/codes/"+sourceFileName);
+        String basename= FilenameUtils.getBaseName(file.getName());
+
         if(!file.exists()){
             file.createNewFile();
-        }*/
+        }
 
         System.out.println("源文件名为：" + sourceFileName);
         System.out.println("整形题目号为：" + Integer.valueOf(sNum));
         //判断是否存储成功
-        boolean writeFlag = judgeService.writeFile(codes, sourceFileName);
+        boolean writeFlag = judgeService.writeFile(codes, file);
 
         if (writeFlag) {
             //进入编译阶段
-            String result = judgeService.complierCode(sourceFileName);
-            String comFile = ou.getOuId() + sNum + "com.txt";
-            if(judgeService.writeFile(result, comFile)){
-
-            }
-            if () {
+            String result = judgeService.complierCode(file);
+            System.out.println("编译结果的长度为："+result.length());
+            System.out.println(result);
+            if (result.length()==0) {
                 System.out.println("编译成功");
-                judgeService.runCode("");
-
+                judgeService.runCode(basename);
             } else {
-                System.out.println("便以失败");
+                System.out.println("编译失败");
                 model.addAttribute("message", "编译失败");
             }
 

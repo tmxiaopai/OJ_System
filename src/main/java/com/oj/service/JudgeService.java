@@ -3,6 +3,8 @@ package com.oj.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,10 +20,10 @@ import java.util.Date;
 public class JudgeService {
 
     //将字符存储为文件
-    public boolean writeFile(String content, String filename) {
+    public boolean writeFile(String content, File file) {
 
-        /*try {
-            FileOutputStream fos = new FileOutputStream(file, true);
+        try {
+            FileOutputStream fos = new FileOutputStream(file, false);
             StringBuffer sb = new StringBuffer();
             sb.append(content);
             fos.write(sb.toString().getBytes("utf-8"));
@@ -32,10 +34,10 @@ public class JudgeService {
             e.printStackTrace();
             return false;
         }
-        return true;*/
+        return true;
 
 
-        BufferedWriter bw;
+        /*BufferedWriter bw;
         try {
             bw = new BufferedWriter(new FileWriter(filename, false));
             bw.write(content);
@@ -46,7 +48,7 @@ public class JudgeService {
             System.out.println("文件存入异常");
             return false;
         }
-        return true;
+        return true;*/
 
         /*FileOutputStream bos = null;
         try {
@@ -166,11 +168,13 @@ public class JudgeService {
     }*/
 
     //编译代码
-    public String complierCode(String filename) {
+    public String complierCode(File file) {
         String result = null;
         try {
-            System.out.println("要编译的文件名称为:" + filename);
-            String cmd = "javac "+filename;
+            System.out.println("要编译的文件名称为:" + file.getName());
+            String basename=FilenameUtils.getBaseName(file.getName());
+            String cmd = "gcc G:/codes/" + file.getName() + " -o G:/codes/"+basename
+                    ;
             result = execCmd(cmd, null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,8 +184,8 @@ public class JudgeService {
     }
 
     //判断是否编译成功
-    boolean isComplierSuccess(String filename){
-
+    boolean isComplierSuccess(String filename) {
+        return true;
     }
 
     //运行代码
@@ -189,7 +193,7 @@ public class JudgeService {
         try {
             System.out.println("宗内存" + Runtime.getRuntime().totalMemory());
             System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
-            String result = execCmd("java " + filename, null);
+            String result = execCmd("./home/OJ_Subject/ " + filename, null);
             System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
             System.out.println(result);
             writeFile(result, new File(filename + "run.txt"));

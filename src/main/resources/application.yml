@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/db_oj
     hikari:
       username: root
-      password: tmxiaopai
+      password: mysql
     dirver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
