@@ -23,4 +23,7 @@ public interface SubjectRepository extends JpaRepository<Subject,Integer>{
     @Transactional
     @Query(value = "delete  from Subject s where s.sNum=?1 ")
     public void deletebynum(int num);
+
+    @Query("from Subject where sNum = :snum")
+    public Subject findbysnumtt(int snum);
 }

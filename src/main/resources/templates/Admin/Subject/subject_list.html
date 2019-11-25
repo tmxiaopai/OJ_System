@@ -25,10 +25,10 @@
 	                  <form class="layui-form layui-form-pane">
 						<div class="layui-form-item">
 							<div class="layui-inline">
-								<label class="layui-form-label">题目号码</label>
-								<div class="layui-input-inline">
-									<input type="text" name="sNum" id="snu" placeholder="请输入" autocomplete="off" class="layui-input" />
-								</div>
+<!--								<label class="layui-form-label">题目号码</label>-->
+<!--								<div class="layui-input-inline">-->
+<!--									<input type="text" name="sNum" id="snu" placeholder="请输入" autocomplete="off" class="layui-input" />-->
+<!--								</div>-->
 								<label class="layui-form-label">题目名称</label>
 								<div class="layui-input-inline">
 									<input type="text" name="sName" id="sna" placeholder="请输入" autocomplete="off" class="layui-input" />
@@ -45,21 +45,31 @@
          </div>
 
   <div class="layui-card-body">
-    <table class="layui-hide" id="test-table-page"></table>、
+    <table class="layui-hide" id="test-table-page" lay-filter="toobar"></table>、
     <script type="text/html" id="toobar">
-<!--   			 <a class="layui-btn layui-btn-xs"  lay-event="modify">修改</a>-->
+   			 <a class="layui-btn layui-btn-xs"  lay-event="modify">修改</a>
    			 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
    			 <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="add">录入比赛</a>
   	</script>
   </div>
 <!--  录入比赛-->
-  <div hidden="hidden" id="addsubject" >
-      <form class="layui-form" id="add_subject">
+  <div hidden="hidden" id="add_subject" >
+      <form class="layui-form" id="addsubject">
           <div class="layui-row layui-col-space10 layui-form-item">
               <div class="layui-col-lg7">
-                  <label class="layui-form-label">比赛ID:</label>
+                  <label class="layui-form-label">比赛ID</label>
                   <div class="layui-input-block">
-                      <input type="text" name="cId" id="cId" required layverify="required"  class="layui-input"/>
+                      <input type="text" name="cId" id="cid" required layverify="required"  class="layui-input"/>
+                  </div>
+              </div>
+              <div class="layui-col-lg5">
+              </div>
+          </div>
+          <div class="layui-row layui-col-space10 layui-form-item" hidden="hidden">
+              <div class="layui-col-lg7">
+                  <label class="layui-form-label">题目编号</label>
+                  <div class="layui-input-block">
+                      <textarea name="sId" id="sid" class="layui-textarea"></textarea>
                   </div>
               </div>
               <div class="layui-col-lg5">
@@ -68,11 +78,62 @@
           <hr>
           <div class="layui-form-item">
               <div class="layui-input-block">
-                  <button type="button" class="layui-btn" id="btn_save">确定</button>
+                  <button type="button" class="layui-btn" id="btn_add">确定</button>
               </div>
           </div>
       </form>
   </div>
+<!--  修改题目-->
+<div hidden="hidden" id="modify_subject">
+  <form class="layui-form" id="modifysubject">
+      <div class="layui-row layui-col-space10 layui-form-item" hidden="hidden">
+          <div class="layui-col-lg7" >
+              <label class="layui-form-label">ID</label>
+              <div class="layui-input-inline">
+                  <input type="text" name="sId" id="modifysid" required layverify="required"  class="layui-input"/>
+              </div>
+          </div>
+          <div class="layui-col-lg5">
+          </div>
+      </div>
+      <div class="layui-row layui-col-space10 layui-form-item">
+          <div class="layui-col-lg7">
+              <label class="layui-form-label">名称</label>
+              <div class="layui-input-inline">
+                  <input type="text" name="sName" id="sname" required layverify="required"  class="layui-input"/>
+              </div>
+          </div>
+          <div class="layui-col-lg5">
+          </div>
+      </div>
+      <div class="layui-row layui-col-space10 layui-form-item">
+          <div class="layui-col-lg7">
+              <label class="layui-form-label">时限</label>
+              <div class="layui-input-inline">
+                  <input name="timeLimit" id="timelimit" placeholder="以毫秒为单位" required layverify="required" class="layui-input"></input>
+              </div>
+          </div>
+          <div class="layui-col-lg5">
+          </div>
+      </div>
+      <div class="layui-row layui-col-space10 layui-form-item">
+          <div class="layui-col-lg7">
+              <label class="layui-form-label">内存</label>
+              <div class="layui-input-inline">
+                  <input name="memoryLimit" id="memorylimit" placeholder="以KB为单位" required layverify="required" class="layui-input"></input>
+              </div>
+          </div>
+          <div class="layui-col-lg5">
+          </div>
+      </div>
+<hr>
+      <div class="layui-form-item layui-form-text">
+          <div class="layui-input-block">
+              <button class="layui-btn" type="submit" id="btnmodify">确认</button>
+          </div>
+      </div>
+  </form>
+</div>
   
   <script src="layuiadmin/layui/layui.js"></script>
   <script>
@@ -90,9 +151,11 @@
       ,method:'POST'
       ,cols: [
           [
-            {field:'sNum', width:100, title: '题目号码'}
-            ,{field:'sName', width:200, title: '题目名称'}
-            ,{field:'sAllPass', width:100, title: '通过次数', sort: true}
+             {field:'sId', width:80, title: '编号'}
+            ,{field:'sNum', width:80, title: '号码'}
+            ,{field:'sName', width:100, title: '名称'}
+            ,{field:'timeLimit', width:80, title: '时限'}
+            ,{field:'memoryLimit', width:80, title: '内存'}
             ,{field:'sAllSubmit', title: '提交次数', width: 100, sort: true}
             ,{field:'passRate', title: '通过率', width: 100, sort: true}
             ,{field:'sSource', title: '题目源', width: 100, sort: true}
@@ -101,6 +164,53 @@
         ]
       ,page: true
     });
+      //添加题目进入比赛
+      $("body").on("click","#btn_add",function () {
+          var data = $('#addsubject').serialize();
+          var url = 'add_subject_to_contest';
+          $.post(
+              url,
+              data,
+              function (data,status,xhr) {
+                  if(status=="success"){
+                      if(data.code==0){
+                          layer.msg(data.msg, {icon: 1,time:2000});
+                          layer.closeAll('page');
+                          subjecttable.reload();
+                      }else if(data.code==-1){
+                          layer.msg(data.msg, {icon: 1,time:2000});
+                      }else {
+                          layer.msg(data.msg, {icon: 1,time:2000});
+                          layer.closeAll('page');
+                      }
+                  }
+              },"json").fail(function () {
+              layer.closeAll('page');
+              return layer.msg("请求失败")
+          })
+      })
+      //修改题目
+      $("body").on("click","#btnmodify",function () {
+          var data = $('#modifysubject').serialize();
+          var url = "modifysubject";
+          $.post(
+              url,
+              data,
+              function (data,status,xhr) {
+                  if(status=="success"){
+                      if(data.code==0){
+                          layer.msg(data.msg,{icon: 1,time:2000});
+                          layer.closeAll('page');
+                          subjecttable.reload();
+                      }else{
+                          layer.msg(data.msg,{icon: 5,time:2000});
+                      }
+                  }
+              },"json").fail(function () {
+              layer.closeAll('page');
+              return layer.msg("请求失败")
+          })
+      })
       //查询
       $("#btnSearch").on("click",function(){
           var sNum=$('#snu').val();
@@ -117,22 +227,26 @@
       });
       table.on('tool(toobar)',function(obj){
           var data = obj.data;
-          // if(obj.event==='modify'){
-          //     $("#notice_modify").prop("style","display:block;margin:10px;");
-          //     layer.open({
-          //         title:'修改公告',
-          //         shadeClose:true,
-          //         area:['400px','323px'],
-          //         type:1,
-          //         content:$('#notice_modify'), //传入任意的文本或html
-          //         end:function()
-          //         {
-          //             $("#notice_modify").prop("style","display:none;");
-          //         }
-          //     });
-          // }
-          if(obj.event==='delete'){
-              layer.confirm('确认删除么',function (index) {
+          if(obj.event==='modify'){
+              $("#modifysubject").prop("style","display:block;margin:10px;");
+              $("#modifysid").val(data.sId);
+              $("#sname").val(data.sName);
+              $("#timelimit").val(data.timeLimit);
+              $("#memorylimit").val(data.memoryLimit);
+              layer.open({
+                  title:'修改题目',
+                  shadeClose:true,
+                  area:['400px','400px'],
+                  type:1,
+                  content:$('#modify_subject'), //传入任意的文本或html
+                  end:function()
+                  {
+                      $("#modify_subject").prop("style","display:none;");
+                  }
+              });
+          }
+          else if(obj.event==='delete'){
+              layer.confirm('若改题目在某比赛中，则此题目也会从比赛中删除',function (index) {
                   console.log(data)
                   $.ajax({
                       type: "post",
@@ -142,12 +256,21 @@
                       async:false,
                       success:function(data) {
                           if(data.code == 0){
-                              layer.msg(data.msg, {icon: 1,time:10000});
-                              layer.closeAll();
+                              layer.msg(data.msg, {icon: 1,time:3000});
+                              layer.close('index');
                               subjecttable.reload();
+                          }else if(data.code == -1){
+                              layer.msg(data.msg, {icon: 2,time:5000});
+                          }else if(data.code == -2){
+                              layer.msg(data.msg, {icon: 2,time:5000});
+                              layer.close('index');
+                              subjecttable.reload();
+                          }else if(data.code == -3){
+                              layer.msg(data.msg, {icon: 2,time:5000});
+                              layer.close('index');
                           }else{
-                              layer.msg('删除失败', {icon: 2});
-                              layer.closeAll();
+                              layer.msg('删除失败',{icon:2});
+                              layer.close('index');
                               subjecttable.reload();
                           }
                       }
@@ -156,8 +279,10 @@
           }
           else{
               $("#addsubject").prop("style","display:block;margin:10px;");
+              $("#sid").val(data.sId);
+              $("#cid").val(1);
               layer.open({
-                  title:'查看公告',
+                  title:'输入比赛ID',
                   shadeClose:true,
                   area:['400px','323px'],
                   type:1,

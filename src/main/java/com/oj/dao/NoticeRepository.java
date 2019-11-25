@@ -14,7 +14,7 @@ import java.util.List;
  * @package_name com.oj.dao
  */
 public interface NoticeRepository extends JpaRepository<Notice,Integer> {
-    @Query(value = "delete  from Notice n where n.nId=?1 ")
+    @Query(value = "select n from Notice n where n.nName like %?1% ")
     List<Notice> findbynamett(String nname);
 
     @Modifying

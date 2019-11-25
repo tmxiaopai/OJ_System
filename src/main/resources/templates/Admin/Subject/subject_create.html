@@ -19,98 +19,55 @@
           <div class="layui-card-header">添加题目</div>
           <div class="layui-card-body" pad15>
             
-            <div class="layui-form" lay-filter="">
-              <div class="layui-form-item">
+            <form class="layui-form" action="createsubject" method="post">
+              <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">题目难度</label>
                 <div class="layui-input-inline">
-                  <select name="role" lay-verify="">
-                    <option value="1" selected>简单</option>
-                    <option value="2" disabled>一般</option>
-                    <option value="3" disabled>困难</option>
+                  <select name="sDegree">
+                    <option value="0" selected>简单</option>
+                    <option value="1" >一般</option>
+                    <option value="2" >困难</option>
                   </select> 
                 </div>
               </div>
-              <div class="layui-form-item">
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">题目名称</label>
+                <div class="layui-input-inline">
+                  <input name="sName" placeholder="请输入题目名称" required layverify="required" class="layui-input"></input>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">题目号码</label>
+                <div class="layui-input-inline">
+                  <input name="sNum" placeholder="请输入题目号码" required layverify="required" class="layui-input"></input>
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">题目类型</label>
                 <div class="layui-input-inline">
-                  <select name="role" lay-verify="">
-                    <option value="1" selected>求和</option>
-                    <option value="2" disabled>递归</option>
-                    <option value="3" disabled>算法</option>
-                  </select> 
+                  <input name="sType" placeholder="请输入题目类型" required layverify="required" class="layui-input"></input>
                 </div>
               </div>
               <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">题目描述</label>
-                <div class="layui-input-block">
-                  <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-              </div>
-              <div class="layui-form-item">
                 <label class="layui-form-label">运行时间</label>
                 <div class="layui-input-inline">
-                  <select name="role" lay-verify="">
-                    <option value="1" selected>10s</option>
-                    <option value="2" disabled>60s</option>
-                    <option value="3" disabled>120s</option>
-                  </select> 
+                  <input name="timeLimit" placeholder="以毫秒为单位" required layverify="required" class="layui-input"></input>
                 </div>
               </div>
-              <div class="layui-form-item">
+              <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">占用内存</label>
                 <div class="layui-input-inline">
-                  <select name="role" lay-verify="">
-                    <option value="1" selected>1m</option>
-                    <option value="2" disabled>2m</option>
-                    <option value="3" disabled>5m</option>
-                  </select> 
-                </div>
-              </div>
-              <div class="layui-form-item">
-              	<label class="layui-form-label">输入描述</label>
-              	<div class="layui-input-block">
-              		<input type="text" name="title" required layverify="required" placeholder="请输入描述" autocomplete="off" class="layui-input" />
-              	</div>
-              </div>	
-              <div class="layui-form-item">
-              	<label class="layui-form-label">输出描述</label>
-              	<div class="layui-input-block">
-              		<input type="text" name="title" required layverify="required" placeholder="请输入描述" autocomplete="off" class="layui-input" />
-              	</div>
-              </div>	
-              <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">样例输入</label>
-                <div class="layui-input-block">
-                  <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-              </div>
-              <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">样例输出</label>
-                <div class="layui-input-block">
-                  <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-              </div>
-              
-              <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">用例输入</label>
-                <div class="layui-input-block">
-                  <textarea name="remarks" placeholder="请输入测试用例" class="layui-textarea"></textarea>
-                </div>
-              </div>
-              <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">用例输出</label>
-                <div class="layui-input-block">
-                  <textarea name="remarks" placeholder="请输入测试用例" class="layui-textarea"></textarea>
+                  <input name="memoryLimit" placeholder="以KB为单位" required layverify="required" class="layui-input"></input>
                 </div>
               </div>
 
-              <div class="layui-form-item">
+              <div class="layui-form-item layui-form-text">
                 <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认添加</button>
+                  <button class="layui-btn" type="submit" lay-filter="setmyinfo">确认添加</button>
                   <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
                 </div>
               </div>
-            </div>
+            </form>
             
           </div>
         </div>
@@ -118,13 +75,20 @@
     </div>
   </div>
 
-  <script src="../../layuiadmin/layui/layui.js"></script>  
+  <script src="layuiadmin/layui/layui.js"></script>
   <script>
   layui.config({
-    base: '../../layuiadmin/' //静态资源所在路径
+    base: 'layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'set']);
+  }).use(['index', 'set'],function () {
+    $(document).ready(function () {
+      var notify_msg  = '${notify_msg}';
+      if(notify_msg!=null||notify_msg!=""){
+        layer.msg(notify_msg);
+      }
+    })
+  });
   </script>
 </body>
 </html>

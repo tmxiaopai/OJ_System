@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +31,8 @@ public class AdminController {
     OrdinaryUserRepository ordinaryUserRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ContestSubjectRepository contestSubjectRepository;
     /* 页面之间的跳转部分 */
     @RequestMapping("/home")
     public String home(){
@@ -96,9 +100,9 @@ public class AdminController {
         return "Admin/User/user";
     }
     @RequestMapping("/tt_user_info")
-    public String userinfo(Model model){
-        User user = userRepository.getOne(1);
-        model.addAttribute(""); 
+    public String userinfo(HttpServletRequest request,Model model){
+        User user= (User) request.getSession().getAttribute("user");
+        model.addAttribute("user",user);
         return "Admin/User/user_info";
     }
     @RequestMapping("/tt_history_submit")
@@ -106,7 +110,9 @@ public class AdminController {
         return "Admin/User/history_submit";
     }
     @RequestMapping("/tt_modify_password")
-    public String modifypassword(){
+    public String modifypassword(HttpServletRequest request,Model model){
+        User user= (User) request.getSession().getAttribute("user");
+        model.addAttribute("user",user);
         return "Admin/User/modify_password";
     }
     /* ----------------------- */
@@ -116,12 +122,15 @@ public class AdminController {
         JSONArray data = new JSONArray();
         for(Subject subject:subjects){
             JSONObject jo = new JSONObject();
+            jo.put("sId",subject.getSId());
             jo.put("sNum",subject.getSNum());
             jo.put("sName",subject.getSName());
             jo.put("sAllSubmit",subject.getSAllSubmit());
             jo.put("sAllPass",subject.getSAllPass());
             jo.put("passRate",subject.getPassRate());
             jo.put("sSource",subject.getSSource());
+            jo.put("memoryLimit",subject.getMemoryLimit());
+            jo.put("timeLimit", subject.getTimeLimit());
             data.add(jo);
         }
         json.put("code",0);
@@ -143,14 +152,93 @@ public class AdminController {
         }
         return ListSubject(subjects);
     }
+    //创建题目
+    @RequestMapping(value = {"createsubject"},method = RequestMethod.POST)
+    public String createsubject(Subject subject,Model model){
+        JSONObject json = new JSONObject();
+        Integer snum = subject.getSNum();
+        System.out.println(snum);
+        if(subjectRepository.findbysnumtt(snum)==null){
+            subject.setPassRate(0.0);
+            subject.setSAllSubmit(0);
+            subject.setSAllPass(0);
+            subjectRepository.save(subject);
+            model.addAttribute("notify_msg","创建成功");
+//            json.put("code",0);
+//            json.put("msg","添加成功");
+        }else{
+            model.addAttribute("notify_msg","创建失败");
+        }
+        return "Admin/Subject/subject_create";
+    }
+    //修改题目
+    @RequestMapping(value = {"modifysubject"},method = RequestMethod.POST)
+    @ResponseBody
+    public String modifysubject(Subject subject){
+        JSONObject json = new JSONObject();
+        Subject subject1 = subjectRepository.getOne(subject.getSId());
+        subject1.setMemoryLimit(subject.getMemoryLimit());
+        subject1.setSName(subject.getSName());
+        subject1.setTimeLimit(subject.getTimeLimit());
+        subjectRepository.save(subject1);
+        json.put("code",0);
+        json.put("msg","修改成功");
+        return json.toJSONString();
+    }
     //删除题目
     @RequestMapping(value = {"deletesubject"},method = RequestMethod.POST)
+    @ResponseBody
     public String deleteSubject(Integer id){
         JSONObject json = new JSONObject();
-        subjectRepository.deletebynum(id);
-        json.put("code",0);
-        json.put("msg","删除成功");
+        Subject subject = subjectRepository.findbysnumtt(id);
+        int sid = subject.getSId();
+        System.out.println(sid);
+        if(contestSubjectRepository.getbysidtt(sid)==null){
+            subjectRepository.deletebynum(id);
+            json.put("code",0);
+            json.put("msg","删除成功");
+       }else{
+            contestSubjectRepository.deletebysidtt(sid);
+            subjectRepository.deletebynum(id);
+            json.put("code",0);
+            json.put("msg","删除成功");
+        }
         return json.toJSONString();
+    }
+    //题目加入比赛
+    @RequestMapping(value = {"add_subject_to_contest"},method = RequestMethod.POST)
+    @ResponseBody
+    public String addsubjecttocontest(ContestSubject contestSubject){
+        JSONObject json = new JSONObject();
+        if(contestSubject.getCId()==null){
+            json.put("code",-1);
+            json.put("msg","未找到该比赛，请重新输入");
+            return json.toJSONString();
+        }else{
+            Contest contest = contestSubject.getCId();
+            Subject subject = contestSubject.getSId();
+            System.out.println(contest.getCId());
+            System.out.println(subject.getSId());
+            System.out.println(contestSubjectRepository.subjectcount(contest.getCId()));
+            int nowcount = contestSubjectRepository.subjectcount(contest.getCId());
+            int sid = subject.getSId();
+            int cid = contest.getCId();
+            if(contestSubjectRepository.getbytt(sid,cid)==null){
+                if(nowcount<contest.getCCount()){
+                    contestSubjectRepository.save(contestSubject);
+                    json.put("code",0);
+                    json.put("msg","添加成功");
+                }else{
+                    json.put("code",-3);
+                    json.put("msg","该比赛题目已满");
+                }
+
+            }else{
+                json.put("code",-2);
+                json.put("msg","该题目已在此比赛中");
+            }
+            return json.toJSONString();
+        }
     }
 
     /* 比赛模块 */
@@ -194,6 +282,7 @@ public class AdminController {
         Administrator administrator=administratorRepository.getOne(1);
         contest.setCreateUserId(administrator);
         contest.setIsFinish(Short.valueOf("0"));
+        contest.setCUserCount(0);
         contestRepository.save(contest);
         return "Admin/Contest/contest_create";
     }
@@ -213,7 +302,7 @@ public class AdminController {
             data.add(jo);
         }
         json.put("code",0);
-        json.put("msg","");
+        json.put("msg","添加成功");
         json.put("data",data);
         return json.toJSONString();
     }
@@ -323,5 +412,23 @@ public class AdminController {
         json.put("uPhone",user.getUPhone());
         json.put("uMail",user.getUMail());
         return json.toJSONString();
+    }
+    //修改密码
+    @RequestMapping(value = {"modifypassword"},method = RequestMethod.POST)
+    public String modifypassword(User user){
+        User finduser = userRepository.getOne(user.getUId());
+        finduser.setUPassword(user.getUPassword());
+        userRepository.save(finduser);
+        return "Admin/User/modify_password";
+    }
+    //修改个人信息
+    @RequestMapping(value = {"modifyuserinfo"},method = RequestMethod.POST)
+    public String modifyuserinfo(User user){
+        User finduser=userRepository.getOne(user.getUId());
+        finduser.setUNickname(user.getUNickname());
+        finduser.setUPhone(user.getUPhone());
+        finduser.setUSex(user.getUSex());
+        userRepository.save(finduser);
+        return "Admin/User/user_info";
     }
 }

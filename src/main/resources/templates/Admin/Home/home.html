@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>主页</title>
@@ -108,11 +108,11 @@
        		<ul class="top-m">
        			<li class="on">
 	       			<img src="images/user.png" width="14px" height="14px"/>
-		       		<span>张小凡</span>
+		       		<span th:text="${user.getUNickname()}"></span>
 		       		<img src="images/arrow.png" width="10px" height="10px"/>
 		       		<ul class="topDown">
 			       		<li id="userinfo"><a id="userinfo_btn" href="tt_user" target="home_iframe">个人信息</a></li>
-				       	<li id="logout"><a id="logout_btn" href="">退出登录</a></li>
+				       	<li id="logout"><a id="logout_btn" href="/logout">退出登录</a></li>
 			    	</ul>
        			</li>
        		</ul>

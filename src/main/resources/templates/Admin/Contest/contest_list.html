@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ItemBank</title>
@@ -41,6 +41,9 @@
 
   <div class="layui-card-body">
     <table class="layui-hide" id="test-table-page"></table>
+    <script type="text/html" id="toobar">
+          <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="look">查看</a>
+    </script>
   </div>
 
   
@@ -63,11 +66,12 @@
             {field:'cId', width:75, title: '编号', sort: true}
             ,{field:'cName', width:150, title: '名称'}
             ,{field:'cCount', width:100, title: '题目数量', sort: true}
-            ,{field:'startTime', width:120, title: '开始时间', sort: true}
-            ,{field:'endTime', width: 120, title: '结束时间',  sort: true}
+            ,{field:'startTime', width:100, title: '开始时间', sort: true}
+            ,{field:'endTime', width: 100, title: '结束时间',  sort: true}
             ,{field:'cUserCount', width:100, title: '报名人数', sort: true}
             ,{field:'cPassword', width:100, title: '比赛密码'}
-            ,{field:'isFinish', minWidth:100, title: '是否完成', sort: true}
+            ,{field:'isFinish', width:100, title: '是否完成', sort: true}
+            ,{fixed : 'right',title : '操作',align : 'center',toolbar : '#toobar',minWidth:75}
           ]
         ]
       ,page: true

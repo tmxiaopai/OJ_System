@@ -55,7 +55,7 @@
 			<form class="layui-form" id="noticemodify">
                 <div class="layui-row layui-col-space10 layui-form-item" hidden="hidden">
                     <div class="layui-col-lg7">
-                        <label class="layui-form-label">公告名称:</label>
+                        <label class="layui-form-label">公告ID:</label>
                         <div class="layui-input-block">
                             <input type="text" name="nId"  id="nnid" class="layui-input"/>
                         </div>
@@ -67,7 +67,7 @@
 					<div class="layui-col-lg7">
 						<label class="layui-form-label">公告名称:</label>
 						<div class="layui-input-block">
-							<input type="text" name="nName"  id="modifyname" class="layui-input"/>
+							<input type="text" name="nName"  id="modifyname" required layverify="required" class="layui-input"/>
 						</div>
 					</div>
 					<div class="layui-col-lg5">																		
@@ -77,7 +77,7 @@
 					<div class="layui-col-lg7">
 						<label class="layui-form-label">公告内容:</label>
 						<div class="layui-input-block">
-							<textarea name="nContent" id="modifycontent" class="layui-textarea"></textarea>
+							<textarea name="nContent" id="modifycontent" required layverify="required" class="layui-textarea"></textarea>
 						</div>
 					</div>
 					<div class="layui-col-lg5">																		
@@ -193,12 +193,12 @@
                     async:false,
                     success:function(data) {
                         if(data.code == 0){
-                            layer.msg(data.msg, {icon: 1,time:10000});
-                            layer.closeAll();
+                            layer.msg(data.msg, {icon: 1,time:2000});
+                            layer.close('index');
                             noticetable.reload();
                         }else{
                             layer.msg('删除失败', {icon: 2});
-                            layer.closeAll();
+                            layer.close('index');
                             noticetable.reload();
                         }
                     }
