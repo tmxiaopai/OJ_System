@@ -46,6 +46,11 @@ public class LoginController {
                     model.addAttribute("user", user);
                     model.addAttribute("ou", ou);
                     model.addAttribute("logflag", true);
+                    if(user.getUIdentity()==0){
+                        return "ordinaryMenu/home";
+                    }else {
+                        return "Admin/Home/home";
+                    }
                 } else {
                     model.addAttribute("logmes", "密码不正确,请重新输入！");
                     model.addAttribute("email", email);
@@ -61,6 +66,14 @@ public class LoginController {
             model.addAttribute("logflag", false);
         }
 
+        return "ordinaryMenu/home";
+    }
+
+    @RequestMapping("/logout")
+    public String LogOut(HttpServletRequest request, ModelMap modelMap){
+        request.getSession().removeAttribute("user");
+        request.getSession().removeAttribute("ou");
+        modelMap.addAttribute("logflag",false);
         return "ordinaryMenu/home";
     }
 }

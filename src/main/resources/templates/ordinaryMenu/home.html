@@ -36,7 +36,8 @@
         </li>
         <li id="practice" class="col-sm-2 col-sm-offset-6 menus" th:if="${logflag}">
             <a href="/subject_menu" target="home_iframe">
-                <span id="practice_btn" class="glyphicon glyphicon glyphicon-user" th:text="${user.uNickname}"></span>
+                <span id="practice_btn" class="glyphicon glyphicon glyphicon-user" th:text="${user.uNickname}"></span>&nbsp;
+                <a href="/logout">退出</a>
             </a>
         </li>
         <li class="col-sm-2 col-sm-offset-6" th:if="${not logflag}">

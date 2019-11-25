@@ -44,19 +44,19 @@
     <div class="col-md-6" id="editpage">
 
         <div class="col-md-12">
-            <textarea name="codes" rows="25" style="width: 100%"></textarea>
+            <textarea th:text="${code}" name="codes" rows="25" style="width: 100%"></textarea>
         </div>
         <div class="col-md-12">
             <div class="col-md-2 col-sm-6">
                 <select id="" name="clanguage" class="selectpicker show-tick form-control" data-actions-box="true">
-                    <option value="java">Java</option>
                     <option value="c">C</option>
+                    <option value="java">Java</option>
                     <option value="cpp">C++</option>
                     <option value="python">Python</option>
                 </select><br>
                 <button class="btn btn-success" style="width: 82px">提交</button>
             </div>
-            <div class="col-md-10 col-sm-10" id="reback">这里放的反馈信息：编译问题、运行问题、通过</div>
+            <div th:text="${message}" class="col-md-10 col-sm-10" id="reback">这里放的反馈信息：编译问题、运行问题、通过</div>
         </div>
 
     </div>

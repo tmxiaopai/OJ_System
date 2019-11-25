@@ -34,11 +34,11 @@ public class Init {
 
     @RequestMapping("init")
     public String InitData() {
-        User user1 = new User("会飞的橘子", "1234567890", (short) 0, "hir@qq.com", "17732188835", "男");
-        User user2 = new User("会爬树的猪", "1234567890", (short) 0, "hir@qq.com", "17732188835", "女");
-        User user3 = new User("会唱歌的男孩子", "1234567890", (short) 0, "hir@qq.com", "17732188835", "男");
-        User user4 = new User("聪明的汪小", "1234567890", (short) 1, "hir@qq.com", "17732188835", "男");
-        User user5 = new User("会飞的橘子2", "1234567890", (short) 1, "hir@qq.com", "17732188835", "男");
+        User user1 = new User("会飞的橘子", "123456", (short) 0, "a@qq.com", "17732188835", "男");
+        User user2 = new User("会爬树的猪", "123456", (short) 0, "b@qq.com", "17732188835", "女");
+        User user3 = new User("会唱歌的男孩子", "123456", (short) 0, "c@qq.com", "17732188835", "男");
+        User user4 = new User("聪明的汪小", "123456", (short) 1, "admin@qq.com", "17732188835", "男");
+        User user5 = new User("会飞的橘子2", "123456", (short) 1, "ad@qq.com", "17732188835", "男");
 
         OrdinaryUser ordinaryUser1 = new OrdinaryUser(0, 0, 0.0, user1);
         OrdinaryUser ordinaryUser2 = new OrdinaryUser(0, 0, 0.0, user2);
@@ -61,8 +61,8 @@ public class Init {
         administratorRepository.save(administrator2);
 
         Subject subject1 = new Subject(3679, "数字之积", 0, 0, 0.0, 1024, 5000, "计算", (short) 0, "tmxf");
-        Subject subject2 = new Subject(1293, "生日礼物", 0, 0, 0.0, 1024, 5000, "计算", (short) 0, "tmxf");
-        Subject subject3 = new Subject(1325, "采矿", 0, 0, 0.0, 1024, 5000, "计算", (short) 0, "tmxf");
+        Subject subject2 = new Subject(1293, "生日礼物", 0, 0, 0.0, 1024, 5000, "计算", (short) 1, "tmxf");
+        Subject subject3 = new Subject(1325, "采矿", 0, 0, 0.0, 1024, 5000, "计算", (short) 2, "tmxf");
 
         subjectRepository.save(subject1);
         subjectRepository.save(subject2);
