@@ -154,16 +154,14 @@ public class AdminController {
     }
     //创建题目
     @RequestMapping(value = {"createsubject"},method = RequestMethod.POST)
-    public String createsubject(Subject subject,Model model,HttpServletRequest request){
+    public String createsubject(Subject subject,Model model){
         JSONObject json = new JSONObject();
         Integer snum = subject.getSNum();
-        User user= (User) request.getSession().getAttribute("user");
         System.out.println(snum);
-        if(subjectRepository.findbysnumtt(snum)==null){
+        if(subjectRepository.findBySnum(snum)==null){
             subject.setPassRate(0.0);
             subject.setSAllSubmit(0);
             subject.setSAllPass(0);
-            subject.setSSource(user.getUNickname());
             subjectRepository.save(subject);
             model.addAttribute("notify_msg","创建成功");
 //            json.put("code",0);
@@ -192,7 +190,7 @@ public class AdminController {
     @ResponseBody
     public String deleteSubject(Integer id){
         JSONObject json = new JSONObject();
-        Subject subject = subjectRepository.findbysnumtt(id);
+        Subject subject = subjectRepository.findBySnum(id);
         int sid = subject.getSId();
         System.out.println(sid);
         if(contestSubjectRepository.getbysidtt(sid)==null){
@@ -280,9 +278,8 @@ public class AdminController {
     }
     //创建比赛
     @RequestMapping(value = {"createContest"},method = RequestMethod.POST)
-    public String createContest(Contest contest,HttpServletRequest request){
-        User user= (User) request.getSession().getAttribute("user");
-        Administrator administrator = administratorRepository.findbyuidtt(user.getUId());
+    public String createContest(Contest contest){
+        Administrator administrator=administratorRepository.getOne(1);
         contest.setCreateUserId(administrator);
         contest.setIsFinish(Short.valueOf("0"));
         contest.setCUserCount(0);
@@ -323,11 +320,10 @@ public class AdminController {
     }
     //添加公告
     @RequestMapping(value={"add_notice"},method = RequestMethod.POST)
-    public String addnotice(Notice notice, Model model,HttpServletRequest request){
+    public String addnotice(Notice notice, Model model){
         model.addAttribute("notify_msg","添加成功");
         Date date = new Date();
-        User user= (User) request.getSession().getAttribute("user");
-        Administrator administrator = administratorRepository.findbyuidtt(user.getUId());
+        Administrator administrator=administratorRepository.getOne(1);
         notice.setAdId(administrator);
         notice.setNContent(notice.getNContent());
         notice.setNTime(date);

@@ -28,7 +28,7 @@ public class UserContest {
     @Column
     private Integer ucPosition;//用户排名
     @Column
-    private Timestamp ucTime;//用户在比赛中总的做题时间，算上罚时
+    private long ucTime;//用户在比赛中总的做题时间，算上罚时
 
     @ManyToOne
     @JoinColumn(name = "ouId")
@@ -45,7 +45,7 @@ public class UserContest {
     public UserContest() {
     }
 
-    public UserContest(Integer ucPassCount, Integer ucPosition, Timestamp ucTime, OrdinaryUser ouId, Contest cId) {
+    public UserContest(Integer ucPassCount, Integer ucPosition, long ucTime, OrdinaryUser ouId, Contest cId) {
         this.ucPassCount = ucPassCount;
         this.ucPosition = ucPosition;
         this.ucTime = ucTime;

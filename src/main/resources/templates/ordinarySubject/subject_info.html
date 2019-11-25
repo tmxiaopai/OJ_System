@@ -23,7 +23,7 @@
 <div id="subjecttitle" class="col-md-12 text-center">
     <b><span th:text="${subject.sName}"></span><br></b>
     <small>
-        通过率：<span th:text="${(subject.passRate+ 0.8)*100}"></span>% |
+        通过率：<span th:text="${(subject.passRate)*100}"></span>% |
         提交次数：<span th:text="${subject.sAllSubmit}"></span> |
         难度：
         <span class="list-inline" th:switch="${subject.sDegree}">

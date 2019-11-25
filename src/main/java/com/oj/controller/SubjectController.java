@@ -38,9 +38,9 @@ public class SubjectController {
 
     @RequestMapping("/item_bank")
     public String itemBank(ModelMap model) {
-        int allSubmitCount = 180;
+        int allSubmitCount = (int) subjectSubmitRepository.count();
         int subjectCount = (int) subjectRepository.count();
-        int allpassCount = 12;
+        int allpassCount = subjectSubmitRepository.countPass().size();
         float passRate = (float) allpassCount / (float) allSubmitCount * 100;
         System.out.println(passRate);
         model.addAttribute("subCount", subjectCount);
@@ -99,9 +99,10 @@ public class SubjectController {
     }
 
     @RequestMapping("/subjectInfo")
-    public String subjectInfo(@RequestParam("sid") Integer sid, ModelMap model) {
+    public String subjectInfo(@RequestParam("sid") Integer sid, ModelMap model,HttpServletRequest request) {
         System.out.println(sid);
         Subject subject = subjectRepository.getOne(sid);
+        request.getSession().setAttribute("subject",subject);
         model.addAttribute("subject", subject);
         return "ordinarySubject/subject_info";
     }
@@ -115,8 +116,17 @@ public class SubjectController {
     }
 
     @RequestMapping("/submit_list")
-    public String submitList(ModelMap model) {
-        List<SubjectSubmit> subjectSubmits = subjectSubmitRepository.findAll();
+    public String submitList(ModelMap model,HttpServletRequest request) {
+        OrdinaryUser ou = (OrdinaryUser) request.getSession().getAttribute("ou");
+        List<SubjectSubmit> subjectSubmits =null;
+
+        if(ou!=null){
+            Integer OuId=ou.getOuId();
+            subjectSubmits=subjectSubmitRepository.findByOUID(ou);
+        }else {
+            subjectSubmits = subjectSubmitRepository.findAll();
+        }
+
         model.addAttribute("submits", subjectSubmits);
         return "ordinarySubject/submit_list";
     }

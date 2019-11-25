@@ -76,8 +76,8 @@ public class JudgeService {
     }
 
     //读文件
-    public void readFile(String filename) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
+    public void readFile(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file.getName()));
         String tempString;
         while ((tempString = reader.readLine()) != null) {
             /*String[] se = tempString.split(" ");//切割字符串
@@ -99,8 +99,8 @@ public class JudgeService {
     //判度文件内容是否相同
     public boolean fileCompare(String outFileName, String fileName) {
 
-        File file1 = new File(outFileName + ".txt");
-        File file2 = new File(fileName = ".txt");
+        File file1 = new File("");
+        File file2 = new File("");
 
         if (file1.length() != file2.length()) {
             return false;
@@ -183,30 +183,28 @@ public class JudgeService {
         return result;
     }
 
-    //判断是否编译成功
-    boolean isComplierSuccess(String filename) {
-        return true;
-    }
-
     //运行代码
     public boolean runCode(String filename) {
         try {
-            System.out.println("宗内存" + Runtime.getRuntime().totalMemory());
+            System.out.println("总内存" + Runtime.getRuntime().totalMemory());
             System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
-            String result = execCmd("./home/OJ_Subject/ " + filename, null);
+            String cmd="G:/codes/"+filename+".exe";
+            String result = execCmd(cmd, null);
             System.out.println("空闲内存" + Runtime.getRuntime().freeMemory());
             System.out.println(result);
-            writeFile(result, new File(filename + "run.txt"));
+            String resPath="G:/codes/"+filename+".txt";
+            writeFile(result, new File(resPath));
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("运行的时候出现了问题");
+            return false;
         }
 
 
         //比较代码运行结果是否一致
 
 
-        return false;
+        return true;
     }
 
     //调用系统命令

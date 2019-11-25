@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author TMXIAOPAI
@@ -22,7 +23,7 @@ public class SubjectSubmit {
     @Column
     private String ssResult;//题目运行结果
     @Column
-    private Timestamp ssRuntime;//题目运行时间
+    private long ssRuntime;//题目运行时间
     @Column
     private Integer ssMemorySize;//题目内存占用
     @Column
@@ -32,7 +33,7 @@ public class SubjectSubmit {
     @Column
     private Integer ssCodeLength;//代码长度
     @Column
-    private Timestamp ssTime;
+    private Date ssTime;
     @ManyToOne
     @JoinColumn(name = "ouId")
     private OrdinaryUser ouId;
@@ -43,7 +44,7 @@ public class SubjectSubmit {
     public SubjectSubmit() {
     }
 
-    public SubjectSubmit(String ssResult, Timestamp ssRuntime, Integer ssMemorySize, String ssLanguage, String ssCompileInfo, Integer ssCodeLength, Timestamp ssTime, OrdinaryUser ouId, Subject sId) {
+    public SubjectSubmit(String ssResult, long ssRuntime, Integer ssMemorySize, String ssLanguage, String ssCompileInfo, Integer ssCodeLength, Date ssTime, OrdinaryUser ouId, Subject sId) {
         this.ssResult = ssResult;
         this.ssRuntime = ssRuntime;
         this.ssMemorySize = ssMemorySize;

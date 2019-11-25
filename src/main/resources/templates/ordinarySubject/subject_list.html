@@ -79,7 +79,7 @@
             <td><a th:href="@{'/subjectInfo?sid='+${subject.SId}}" target="_blank"><span th:text="${subject.SName}"></span></a></td>
             <td><span class="glyphicon glyphicon-ok-circle"></span></td>
             <td>
-                <span th:text="${subject.PassRate}"></span>
+                <span th:text="${(subject.passRate)*100}"></span>%
                 (<span th:text="${subject.SAllPass}"></span>/
                 <span th:text="${subject.SAllSubmit}"></span>)
             </td>

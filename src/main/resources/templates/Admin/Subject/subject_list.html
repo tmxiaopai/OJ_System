@@ -178,12 +178,9 @@
                           layer.closeAll('page');
                           subjecttable.reload();
                       }else if(data.code==-1){
-                          layer.msg(data.msg, {icon: 2,time:2000});
-                      }else if(data.code==-2){
-                          layer.msg(data.msg, {icon: 2,time:2000});
-                          layer.closeAll('page');
-                      }else{
-                          layer.msg(data.msg,{icon:2,time:2000})
+                          layer.msg(data.msg, {icon: 1,time:2000});
+                      }else {
+                          layer.msg(data.msg, {icon: 1,time:2000});
                           layer.closeAll('page');
                       }
                   }
@@ -259,21 +256,20 @@
                       async:false,
                       success:function(data) {
                           if(data.code == 0){
-                              layer.msg(data.msg, {icon: 1,time:2000});
+                              layer.msg(data.msg, {icon: 1,time:3000});
                               layer.close('index');
                               subjecttable.reload();
-                          // }else if(data.code == -1){
-                          //     layer.msg(data.msg, {icon: 2,time:5000});
-                          // }else if(data.code == -2){
-                          //     layer.msg(data.msg, {icon: 2,time:5000});
-                          //     layer.close('index');
-                          //     subjecttable.reload();
-                          // }else if(data.code == -3){
-                          //     layer.msg(data.msg, {icon: 2,time:5000});
-                          //     layer.close('index');
-                          //
+                          }else if(data.code == -1){
+                              layer.msg(data.msg, {icon: 2,time:5000});
+                          }else if(data.code == -2){
+                              layer.msg(data.msg, {icon: 2,time:5000});
+                              layer.close('index');
+                              subjecttable.reload();
+                          }else if(data.code == -3){
+                              layer.msg(data.msg, {icon: 2,time:5000});
+                              layer.close('index');
                           }else{
-                              layer.msg('删除失败',{icon:2,time:5000});
+                              layer.msg('删除失败',{icon:2});
                               layer.close('index');
                               subjecttable.reload();
                           }

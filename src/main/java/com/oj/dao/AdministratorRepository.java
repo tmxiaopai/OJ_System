@@ -2,7 +2,6 @@ package com.oj.dao;
 
 import com.oj.bean.Administrator;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * @author TMXIAOPAI
@@ -10,6 +9,4 @@ import org.springframework.data.jpa.repository.Query;
  * @package_name com.oj.dao
  */
 public interface AdministratorRepository extends JpaRepository<Administrator,Integer> {
-    @Query(value = "from Administrator where u_id = :uid")
-    public Administrator findbyuidtt(int uid);
 }

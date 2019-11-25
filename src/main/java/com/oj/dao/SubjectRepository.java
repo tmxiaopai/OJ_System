@@ -25,5 +25,5 @@ public interface SubjectRepository extends JpaRepository<Subject,Integer>{
     public void deletebynum(int num);
 
     @Query("from Subject where sNum = :snum")
-    public Subject findbysnumtt(int snum);
+    public Subject findBySnum(Integer snum);
 }

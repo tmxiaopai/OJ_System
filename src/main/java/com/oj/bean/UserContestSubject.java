@@ -22,7 +22,7 @@ public class UserContestSubject {
     @Column
     private Integer errorCount;//错误提交次数
     @Column
-    private Timestamp finishTime;//完成总时间
+    private long finishTime;//完成总时间
     @ManyToOne
     @JoinColumn(name = "ucId")
     private UserContest ucId;//用户比赛ID
@@ -30,7 +30,7 @@ public class UserContestSubject {
     public UserContestSubject() {
     }
 
-    public UserContestSubject(Integer errorCount, Timestamp finishTime, UserContest ucId) {
+    public UserContestSubject(Integer errorCount, long finishTime, UserContest ucId) {
         this.errorCount = errorCount;
         this.finishTime = finishTime;
         this.ucId = ucId;
