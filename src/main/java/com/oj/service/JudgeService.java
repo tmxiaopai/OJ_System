@@ -99,8 +99,11 @@ public class JudgeService {
     //判度文件内容是否相同
     public boolean fileCompare(String outFileName, String fileName) {
 
-        File file1 = new File("");
-        File file2 = new File("");
+        File file1 = new File(outFileName);
+        File file2 = new File(fileName);
+
+        System.out.println("1的长度"+file1.length());
+        System.out.println(file2.length());
 
         if (file1.length() != file2.length()) {
             return false;

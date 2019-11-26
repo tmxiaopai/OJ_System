@@ -102,14 +102,22 @@ public class JudgeController {
                 subjectSubmit.setSsRuntime(times);
                 if (runflag) {
 
+                    if(!judgeService.fileCompare("G:/codes/"+basename+".txt","G:/codes/subject/"+sNum+"/output.txt")){
+                        model.addAttribute("message", "结果错误");
+                        subjectSubmit.setSsResult("结果错误");
+                        subject.setPassRate(((double) subject.getSAllPass() / (double) subcount));
+                        ou.setOuPassRate((double) ou.getOuAllPass() / (double) (ou.getOuAllSubmit()));
+                    }else{
+                        model.addAttribute("message", "运行成功");
+                        subjectSubmit.setSsResult("运行成功");
+                        Integer passcount = subject.getSAllPass() + 1;
+                        subject.setSAllPass(passcount);
+                        subject.setPassRate(((double) passcount / (double) subcount));
+                        ou.setOuAllPass(ou.getOuAllPass() + 1);
+                        ou.setOuPassRate((double) ou.getOuAllPass() / (double) (ou.getOuAllSubmit() + 1));
+                    }
 
-                    model.addAttribute("message", "运行成功");
-                    subjectSubmit.setSsResult("运行成功");
-                    Integer passcount = subject.getSAllPass() + 1;
-                    subject.setSAllPass(passcount);
-                    subject.setPassRate(((double) passcount / (double) subcount));
-                    ou.setOuAllPass(ou.getOuAllPass() + 1);
-                    ou.setOuPassRate((double) ou.getOuAllPass() / (double) (ou.getOuAllSubmit() + 1));
+
                 } else {
                     model.addAttribute("message", "结果不正确");
                     subjectSubmit.setSsResult("运行失败");
